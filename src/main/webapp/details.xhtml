@@ -7,7 +7,36 @@
     xmlns:p="http://primefaces.org/ui">
 
     <div class="details">
+        <div class="card p-shadow-4">
+            <div class="p-grid">
+                <div class="p-col-12">
 
+                    <div>
+                        <span class="bold">Дата на последен експорт: </span>
+                        <h:outputText value="#{reader.statistics.get('exportDate')}">
+                            <f:convertDateTime pattern="dd.MM.yyyy, HH:mm:ss" timeZone="#{reader.timeZone}"/>
+                        </h:outputText>
+                    </div>
+                    <div>
+                        <span class="bold">Брой чатове: </span>
+                        #{reader.statistics.get("convCount")}
+                    </div>
+                    <div>
+                        <span class="bold">Общо съобщения: </span>
+                        #{reader.statistics.get("countMessages")}
+                    </div>
+
+                </div>
+
+                <div class="p-col-12">
+                    <p:fileUpload mode="advanced"
+                      multiple="false" auto="true"
+                      allowTypes="/(\.|\/)(json)$/"
+                      invalidFileMessage="only json is allowed"
+                      listener="#{reader.actionFileUpload}"/>
+                </div>
+            </div>
+        </div>
     </div>
 
 </ui:composition>

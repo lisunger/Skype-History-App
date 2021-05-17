@@ -1,0 +1,51 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+    <div jsf:id="chat" class="chat">
+        <div class="card p-shadow-4" jsf:rendered="#{reader.selectedChat != null}">
+
+            <div class="header">
+                <div class="chat-title">#{reader.selectedChat.displayName}</div>
+                <div jsf:id="filter" class="filter">
+                    <div>
+                        <span class="label">Начало: </span>
+                        <p:datePicker value="#{reader.filterDateBegin}" mask="99.99.9999" pattern="dd.MM.yyyy" showIcon="true" locale="bg">
+                            <p:ajax event="dateSelect" partialSubmit="true" process="@this" listener="#{reader.actionSelectDateBegin}" update="filter" />
+                        </p:datePicker>
+                    </div>
+
+                    <div>
+                        <p:commandButton icon="fas fa-comment-alt" label="Зареди съобщения" actionListener="#{reader.actionLoadMessages}" update="messages-wrapper" oncomplete="clearEmoticonContent()"/>
+                    </div>
+                </div>
+            </div>
+
+            <div jsf:id="messages-wrapper" class="messages-wrapper">
+                <p:dataScroller value="#{reader.messageLazyModel}" rendered="#{reader.showChat}"
+                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" >
+
+                    <p:ajax event="load" oncomplete="clearEmoticonContent()" />
+
+                    <div class="message #{mess.displayName == null ? 'my' : ''}">
+                        <div class="date">
+                            <h:outputText value="#{mess.originalArrivalTime}">
+                                <f:convertDateTime pattern="dd.MM.yyyy, HH:mm:ss" timeZone="#{reader.timeZone}"/>
+                            </h:outputText>
+                        </div>
+                        <div class="content">
+                            <h:outputText value="#{mess.content}" escape="false"/>
+                        </div>
+                    </div>
+
+                </p:dataScroller>
+            </div>
+
+        </div>
+    </div>
+
+</ui:composition>

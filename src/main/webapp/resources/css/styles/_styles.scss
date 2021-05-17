@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Arsenal&family=El+Messiri&family=Ruda&family=Ubuntu+Mono&display=swap');
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Ubuntu Mono";
+  font-family: "Ruda";
+  font-family: "Arsenal";
+  font-family: "El Messiri", Roboto, sans-serif;
+  font-size: $fontSize;
+  color: $colorFont;
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  background: $colorSkypeBlue linear-gradient(135deg, $colorSkypeBlue 50%, $colorSkypeBlueDark 100%);
+
+  .ui-widget {
+    font-family: inherit;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.main-wrapper {
+  padding: 0.5em;
+  height: 100vh;
+}
+
+/* Card */
+.card {
+  background-color: #ffffff;
+  border-radius: $roundness;
+  padding: 0.5em;
+}
+
+/* Container */
+.container {
+  margin: auto;
+}
+
+@media ( min-width : 1440px) {
+  .container {
+    width: 1400px;
+  }
+}
+
+/* Conversation details */
+.conversations-container {
+  padding: 0;
+  border-radius: $roundness;
+  overflow: hidden;
+
+  .conversation-scroller.ui-datascroller {
+
+    .ui-datascroller-content {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    .ui-datascroller-content {
+
+      padding: 0;
+
+      &::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      .ui-datascroller-list {
+        width: 100%;
+      }
+    }
+
+    .conversation {
+      display: flex;
+      align-items: start;
+      padding: 4px;
+      border: 1px solid $colorBorder;
+      margin-bottom: 4px;
+      cursor: pointer;
+      background-color: white;
+      color: $colorSkypeBlue;
+      transition: background-color 0.1s ease-in;
+
+      &:hover {
+        background-color: $colorSkypeBlueLight;
+        text-decoration: none;
+      }
+
+      &.highlighted {
+        background-color: $colorSkypeBlueMid;
+      }
+
+      .icon {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        background-color: yellowgreen;
+        flex-shrink: 0;
+        position: relative;
+
+        span {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          text-transform: uppercase;
+          font-weight: bold;
+          font-size: 1.5em;
+          color: white;
+          font-family: "Ubuntu Mono",  sans-serif;
+        }
+      }
+
+      .detail {
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow-x: hidden;
+        margin-left: 0.5em;
+
+        .name {
+          font-weight: bold;
+        }
+
+        .messages-count {
+          color: $colorFontLight;
+        }
+
+        .date {
+          color: $colorFontLight;
+          float: right;
+          display: inline-block;
+        }
+
+      }
+    }
+  }
+}
+
+.chat {
+  .header {
+    height: 100px;
+    border-bottom: 1px solid $colorBorder;
+
+    .chat-title {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .filter {
+      display: flex;
+      align-items: flex-end;
+
+      &>div:not(:last-child) {
+        margin-right: 0.5em;
+      }
+
+      .label {
+        vertical-align: bottom;
+      }
+    }
+  }
+
+  .messages-wrapper {
+
+    .ui-datascroller-item {
+
+      .message {
+        display: inline-block;
+        max-width: 660px;
+        background-color: $colorSkypeBlueLight;
+        padding: 0.25em 0.5em;
+        float: left;
+        clear: both;
+        cursor: pointer;
+        border-radius:  0 $messageRoundness $messageRoundness 0;
+        word-break: break-word;
+        position: relative;
+        transition: background-color 0.1s ease-in;
+
+        &:hover {
+          background-color: $colorSkypeBlueLight2;
+
+          .date {
+            display: block;
+          }
+        }
+
+        .date {
+          position: absolute;
+          width: 120px;
+          font-size: 0.75em;
+          color: $colorFontLight;
+          left: calc(100% + 1em);
+          font-family: Ruda, sans-serif;
+          display: none;
+        }
+
+        &:not(last-of-type) {
+          margin-bottom: 0.25em;
+        }
+
+        &.my {
+          background-color: $colorSkypeBlueMid;
+          float: right;
+          border-radius: $messageRoundness 0 0 $messageRoundness;
+
+          &:hover {
+            background-color: $colorSkypeBlueMid2;
+          }
+
+          .date {
+            left: unset;
+            right: calc(100% + 1em);
+          }
+        }
+
+      }
+    }
+  }
+}

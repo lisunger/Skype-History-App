@@ -1,0 +1,329 @@
+/* Colors */
+@import url("https://fonts.googleapis.com/css2?family=Arsenal&family=El+Messiri&family=Ruda&family=Ubuntu+Mono&display=swap");
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Ubuntu Mono";
+  font-family: "Ruda";
+  font-family: "Arsenal";
+  font-family: "El Messiri", Roboto, sans-serif;
+  font-size: 16px;
+  color: #4c566a;
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  background: #00aff0 linear-gradient(135deg, #00aff0 50%, #0078a3 100%);
+}
+body .ui-widget {
+  font-family: inherit;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.main-wrapper {
+  padding: 0.5em;
+  height: 100vh;
+}
+
+/* Card */
+.card {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 0.5em;
+}
+
+/* Container */
+.container {
+  margin: auto;
+}
+
+@media (min-width: 1440px) {
+  .container {
+    width: 1400px;
+  }
+}
+/* Conversation details */
+.conversations-container {
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
+  padding: 0;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar {
+  width: 10px;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content .ui-datascroller-list {
+  width: 100%;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation {
+  display: flex;
+  align-items: start;
+  padding: 4px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 4px;
+  cursor: pointer;
+  background-color: white;
+  color: #00aff0;
+  transition: background-color 0.1s ease-in;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation:hover {
+  background-color: #ebfaff;
+  text-decoration: none;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation.highlighted {
+  background-color: #c2efff;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: yellowgreen;
+  flex-shrink: 0;
+  position: relative;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .icon span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: white;
+  font-family: "Ubuntu Mono", sans-serif;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .detail {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin-left: 0.5em;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .name {
+  font-weight: bold;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .messages-count {
+  color: #8994a9;
+}
+.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .date {
+  color: #8994a9;
+  float: right;
+  display: inline-block;
+}
+
+.chat .header {
+  height: 100px;
+  border-bottom: 1px solid #dee2e6;
+}
+.chat .header .chat-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.chat .header .filter {
+  display: flex;
+  align-items: flex-end;
+}
+.chat .header .filter > div:not(:last-child) {
+  margin-right: 0.5em;
+}
+.chat .header .filter .label {
+  vertical-align: bottom;
+}
+.chat .messages-wrapper .ui-datascroller-item .message {
+  display: inline-block;
+  max-width: 660px;
+  background-color: #ebfaff;
+  padding: 0.25em 0.5em;
+  float: left;
+  clear: both;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  word-break: break-word;
+  position: relative;
+  transition: background-color 0.1s ease-in;
+}
+.chat .messages-wrapper .ui-datascroller-item .message:hover {
+  background-color: #d8f3fd;
+}
+.chat .messages-wrapper .ui-datascroller-item .message:hover .date {
+  display: block;
+}
+.chat .messages-wrapper .ui-datascroller-item .message .date {
+  position: absolute;
+  width: 120px;
+  font-size: 0.75em;
+  color: #8994a9;
+  left: calc(100% + 1em);
+  font-family: Ruda, sans-serif;
+  display: none;
+}
+.chat .messages-wrapper .ui-datascroller-item .message:not(last-of-type) {
+  margin-bottom: 0.25em;
+}
+.chat .messages-wrapper .ui-datascroller-item .message.my {
+  background-color: #c2efff;
+  float: right;
+  border-radius: 8px 0 0 8px;
+}
+.chat .messages-wrapper .ui-datascroller-item .message.my:hover {
+  background-color: #aae1f4;
+}
+.chat .messages-wrapper .ui-datascroller-item .message.my .date {
+  left: unset;
+  right: calc(100% + 1em);
+}
+
+/* Colors */
+ss {
+  font-weight: bold;
+  position: relative;
+  top: calc(24px / 4);
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  outline: 1px solid #00aff0;
+  /* font-size: 0; */
+}
+ss:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  content: "";
+  background-size: contain;
+}
+ss[type=lipssealed]:after {
+  background-image: url("../resources/emoticons/lipssealed_40x40.gif");
+}
+ss[type=sun]:after {
+  background-image: url("../resources/emoticons/sun_40x40.gif");
+}
+ss[type=shake]:after {
+  background-image: url("../resources/emoticons/shake_40x40.gif");
+}
+ss[type=laugh]:after {
+  background-image: url("../resources/emoticons/laugh_40x40.gif");
+}
+ss[type=sad]:after {
+  background-image: url("../resources/emoticons/sad_40x40.gif");
+}
+ss[type=think]:after {
+  background-image: url("../resources/emoticons/think_40x40.gif");
+}
+ss[type=worry]:after {
+  background-image: url("../resources/emoticons/worry_40x40.gif");
+}
+ss[type=surprised]:after {
+  background-image: url("../resources/emoticons/surprised_40x40.gif");
+}
+ss[type=mmm]:after {
+  background-image: url("../resources/emoticons/mmm_40x40.gif");
+}
+ss[type=devil]:after {
+  background-image: url("../resources/emoticons/devil_40x40.gif");
+}
+ss[type=speechless]:after {
+  background-image: url("../resources/emoticons/speechless_40x40.gif");
+}
+ss[type=wait]:after {
+  background-image: url("../resources/emoticons/wait_40x40.gif");
+}
+ss[type=wonder]:after {
+  background-image: url("../resources/emoticons/wonder_40x40.gif");
+}
+ss[type=envy]:after {
+  background-image: url("../resources/emoticons/envy_40x40.gif");
+}
+ss[type=nod]:after {
+  background-image: url("../resources/emoticons/nod_40x40.gif");
+}
+ss[type=happy]:after {
+  background-image: url("../resources/emoticons/happy_40x40.gif");
+}
+ss[type=cool]:after {
+  background-image: url("../resources/emoticons/cool_40x40.gif");
+}
+ss[type=giggle]:after {
+  background-image: url("../resources/emoticons/giggle_40x40.gif");
+}
+ss[type=rofl]:after {
+  background-image: url("../resources/emoticons/rofl_40x40.gif");
+}
+ss[type=puke]:after {
+  background-image: url("../resources/emoticons/puke_40x40.gif");
+}
+ss[type=dull]:after {
+  background-image: url("../resources/emoticons/dull_40x40.gif");
+}
+ss[type=whew]:after {
+  background-image: url("../resources/emoticons/whew_40x40.gif");
+}
+ss[type=music]:after {
+  background-image: url("../resources/emoticons/music_40x40.gif");
+}
+ss[type=hi]:after {
+  background-image: url("../resources/emoticons/hi_40x40.gif");
+}
+ss[type=yawn]:after {
+  background-image: url("../resources/emoticons/yawn_40x40.gif");
+}
+ss[type=doh]:after {
+  background-image: url("../resources/emoticons/doh_40x40.gif");
+}
+ss[type=smirk]:after {
+  background-image: url("../resources/emoticons/smirk_40x40.gif");
+}
+ss[type=sleepy]:after {
+  background-image: url("../resources/emoticons/sleepy_40x40.gif");
+}
+ss[type=cwl]:after {
+  background-image: url("../resources/emoticons/cryingwhilelaughing_anim.gif");
+}
+ss[type=nahi]:after {
+  background-image: url("../resources/emoticons/nahi_40x40.gif");
+}
+ss[type=donttalktome]:after {
+  background-image: url("../resources/emoticons/donttalktome_40x40.gif");
+}
+ss[type=hungover]:after {
+  background-image: url("../resources/emoticons/hungover_40x40.gif");
+}
+ss[type=veryconfused]:after {
+  background-image: url("../resources/emoticons/veryconfused_40x40.gif");
+}
+ss[type=confused]:after {
+  background-image: url("../resources/emoticons/confused_40x40.gif");
+}
+ss[type=dream]:after {
+  background-image: url("../resources/emoticons/dream_40x40.gif");
+}
+ss[type=party]:after {
+  background-image: url("../resources/emoticons/party_40x40.gif");
+}
+ss[type=smile]:after {
+  background-image: url("../resources/emoticons/smile_40x40.gif");
+}
+ss[type=fingerscrossed]:after {
+  background-image: url("../resources/emoticons/fingerscrossed_40x40.gif");
+}

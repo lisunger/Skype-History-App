@@ -1,0 +1,42 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+    <div class="chats">
+        <div class="card p-shadow-4">
+            <div class="p-grid">
+                <div class="p-col-12 conversations-container">
+
+                    <p:dataScroller id="chatsScroller" value="#{reader.conversations}" var="conv" rowIndexVar="index"
+                                    styleClass="conversation-scroller" mode="inline" scrollHeight="500">
+
+                        <p:commandLink styleClass="conversation p-shadow-1 #{reader.selectedChatIndex == index ? 'highlighted' : ''}"
+                                       actionListener="#{reader.actionChooseChat(index)}" update="chatsScroller chat">
+                            <div class="icon">
+                                <span>#{conv.displayName.charAt(0)}</span>
+                            </div>
+
+                            <div class="detail">
+                                <div class="name">#{conv.displayName}</div>
+                                <div>
+                                    <span class="messages-count">#{conv.messages}</span>
+                                    <span class="date">
+                                        <h:outputText value="#{conv.latestDate}">
+                                            <f:convertDateTime pattern="dd.MM.yyyy, HH:mm:ss" timeZone="#{reader.timeZone}"/>
+                                        </h:outputText>
+                                    </span>
+                                </div>
+                            </div>
+                        </p:commandLink>
+
+                    </p:dataScroller>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</ui:composition>

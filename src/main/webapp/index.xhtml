@@ -8,28 +8,42 @@
 <h:head>
     <title>Lisko's Skype History Reader</title>
     <h:outputStylesheet name="primeflex.min.css" library="css" />
-    <h:outputStylesheet name="styles.css" library="css" />
+    <h:outputStylesheet name="skype_reader_styles.css" library="css" />
+    <script src="https://kit.fontawesome.com/c27b9b9dc2.js" crossorigin="anonymous"></script>
 </h:head>
 <h:body>
-    <h:form>
-        <div class="container">
-            <div class="p-grid">
+    <div class="container">
+        <div class="main-wrapper">
 
-                <div class="p-col-4">
-                    <div class="p-grid">
-                        <div class="p-col-12">
-                            <ui:include src="details.xhtml"/>
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate />
+            </p:messages>
+
+            <h:form prependId="false">
+                <div class="p-grid">
+
+                    <div class="p-col-4">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <ui:include src="details.xhtml"/>
+                            </div>
+
+                            <div class="p-col-12">
+                                <ui:include src="chats.xhtml"/>
+                            </div>
                         </div>
-
-                        <div class="p-col-12"></div>
                     </div>
+
+                    <div class="p-col-8">
+                        <ui:include src="chat.xhtml" />
+                    </div>
+
                 </div>
-
-                <div class="p-col-8"></div>
-
-            </div>
-
+            </h:form>
         </div>
-    </h:form>
+    </div>
+
+    <h:outputScript library="js" name="scripts.js" />
+
 </h:body>
 </html>
