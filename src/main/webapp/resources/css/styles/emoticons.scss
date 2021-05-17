@@ -1,0 +1,175 @@
+@import "variables";
+
+ss {
+	font-weight: bold;
+	position: relative;
+	top: calc(#{$emoticonSizeSmall} / 4);
+	height: $emoticonSizeSmall;
+	width: $emoticonSizeSmall;
+	display: inline-block;
+	outline: 1px solid $colorSkypeBlue;
+	/* font-size: 0; */
+
+	&:after {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: $emoticonSizeSmall;
+		height: $emoticonSizeSmall;
+		content: '';
+		background-size: contain;
+	}
+
+	&[type=lipssealed]:after {
+		background-image: url('../resources/emoticons/lipssealed_40x40.gif') ;
+	}
+
+	&[type=sun]:after {
+		background-image: url('../resources/emoticons/sun_40x40.gif') ;
+	}
+
+	&[type=shake]:after {
+		background-image: url('../resources/emoticons/shake_40x40.gif') ;
+	}
+
+	&[type=laugh]:after {
+		background-image: url('../resources/emoticons/laugh_40x40.gif') ;
+	}
+
+	&[type=sad]:after {
+		background-image: url('../resources/emoticons/sad_40x40.gif') ;
+	}
+
+	&[type=think]:after {
+		background-image: url('../resources/emoticons/think_40x40.gif') ;
+	}
+
+	&[type=worry]:after {
+		background-image: url('../resources/emoticons/worry_40x40.gif') ;
+	}
+
+	&[type=surprised]:after {
+		background-image: url('../resources/emoticons/surprised_40x40.gif') ;
+	}
+
+	&[type=mmm]:after {
+		background-image: url('../resources/emoticons/mmm_40x40.gif') ;
+	}
+
+	&[type=devil]:after {
+		background-image: url('../resources/emoticons/devil_40x40.gif') ;
+	}
+
+	&[type=speechless]:after {
+		background-image: url('../resources/emoticons/speechless_40x40.gif') ;
+	}
+
+	&[type=wait]:after {
+		background-image: url('../resources/emoticons/wait_40x40.gif') ;
+	}
+
+	&[type=wonder]:after {
+		background-image: url('../resources/emoticons/wonder_40x40.gif') ;
+	}
+
+	&[type=envy]:after {
+		background-image: url('../resources/emoticons/envy_40x40.gif') ;
+	}
+
+	&[type=nod]:after {
+		background-image: url('../resources/emoticons/nod_40x40.gif') ;
+	}
+
+	&[type=happy]:after {
+		background-image: url('../resources/emoticons/happy_40x40.gif') ;
+	}
+
+	&[type=cool]:after {
+		background-image: url('../resources/emoticons/cool_40x40.gif') ;
+	}
+
+	&[type=giggle]:after {
+		background-image: url('../resources/emoticons/giggle_40x40.gif') ;
+	}
+
+	&[type=rofl]:after {
+		background-image: url('../resources/emoticons/rofl_40x40.gif') ;
+	}
+
+	&[type=puke]:after {
+		background-image: url('../resources/emoticons/puke_40x40.gif') ;
+	}
+
+	&[type=dull]:after {
+		background-image: url('../resources/emoticons/dull_40x40.gif') ;
+	}
+
+	&[type=whew]:after {
+		background-image: url('../resources/emoticons/whew_40x40.gif') ;
+	}
+
+	&[type=music]:after {
+		background-image: url('../resources/emoticons/music_40x40.gif') ;
+	}
+
+	&[type=hi]:after {
+		background-image: url('../resources/emoticons/hi_40x40.gif') ;
+	}
+
+	&[type=yawn]:after {
+		background-image: url('../resources/emoticons/yawn_40x40.gif') ;
+	}
+
+	&[type=doh]:after {
+		background-image: url('../resources/emoticons/doh_40x40.gif') ;
+	}
+
+	&[type=smirk]:after {
+		background-image: url('../resources/emoticons/smirk_40x40.gif') ;
+	}
+
+	&[type=sleepy]:after {
+		background-image: url('../resources/emoticons/sleepy_40x40.gif') ;
+	}
+
+	&[type=cwl]:after {
+		background-image: url('../resources/emoticons/cryingwhilelaughing_anim.gif') ;
+	}
+
+	&[type=nahi]:after {
+		background-image: url('../resources/emoticons/nahi_40x40.gif') ;
+	}
+
+	&[type=donttalktome]:after {
+		background-image: url('../resources/emoticons/donttalktome_40x40.gif') ;
+	}
+
+	&[type=hungover]:after {
+		background-image: url('../resources/emoticons/hungover_40x40.gif') ;
+	}
+
+	&[type=veryconfused]:after {
+		background-image: url('../resources/emoticons/veryconfused_40x40.gif') ;
+	}
+
+	&[type=confused]:after {
+		background-image: url('../resources/emoticons/confused_40x40.gif') ;
+	}
+
+	&[type=dream]:after {
+		background-image: url('../resources/emoticons/dream_40x40.gif') ;
+	}
+
+	&[type=party]:after {
+		background-image: url('../resources/emoticons/party_40x40.gif') ;
+	}
+
+	&[type=smile]:after {
+		background-image: url('../resources/emoticons/smile_40x40.gif') ;
+	}
+
+	&[type=fingerscrossed]:after {
+		background-image: url('../resources/emoticons/fingerscrossed_40x40.gif') ;
+	}
+
+}
