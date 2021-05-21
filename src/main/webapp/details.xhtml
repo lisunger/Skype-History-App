@@ -29,11 +29,15 @@
                 </div>
 
                 <div class="p-col-12">
-                    <p:fileUpload mode="advanced"
-                      multiple="false" auto="true"
-                      allowTypes="/(\.|\/)(json)$/"
-                      invalidFileMessage="only json is allowed"
-                      listener="#{reader.actionFileUpload}"/>
+                    <p:fileUpload id="export-uploader"
+                        mode="advanced"
+                        multiple="false" auto="false"
+                        allowTypes="/(\.|\/)(tar)$/"
+                        accept="application/x-tar"
+                        invalidFileMessage="only tar is allowed"
+                        label="Нов експорт"
+                        sizeLimit="17179869184"
+                        listener="#{reader.actionFileUpload}"/>
                 </div>
             </div>
         </div>

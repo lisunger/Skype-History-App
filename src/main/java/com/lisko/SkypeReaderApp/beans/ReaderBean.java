@@ -7,6 +7,8 @@ import com.lisko.SkypeReaderApp.database.dao.MessagesLazyDataModel;
 import com.lisko.SkypeReaderApp.database.object.Conversation;
 import com.lisko.SkypeReaderApp.database.object.ConversationDetails;
 import com.lisko.SkypeReaderApp.database.object.Message;
+import com.lisko.SkypeReaderApp.parsing.ArchiveMaster;
+import com.lisko.SkypeReaderApp.parsing.ParsingMaster;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.file.UploadedFile;
@@ -16,6 +18,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -27,7 +33,6 @@ public class ReaderBean implements Serializable {
 
     private DatabaseDao dbDao;
     private Map<String, Object> statistics;
-    private UploadedFile newFile;
     private List<ConversationDetails> conversations;
 
     private int selectedChatIndex = -1;
@@ -55,14 +60,51 @@ public class ReaderBean implements Serializable {
         }
     }
 
+    /**
+     * New export file has been uploaded
+     * @param event contains the uploaded .tar file
+     */
     public void actionFileUpload(FileUploadEvent event) {
-        newFile = event.getFile();
-        if(newFile != null && newFile.getContent() != null && newFile.getContent().length > 0 && newFile.getFileName() != null) {
-            FacesMessage msg = new FacesMessage("Successful", newFile.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        if(event.getFile() == null) {
+            return;
         }
-        else {
-            newFile = null;
+
+        ArchiveMaster archiver = new ArchiveMaster(event);
+
+        try {
+            archiver.unpackFiles();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при разархивиране и четене на архива!"));
+        }
+
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("lisko");
+        EntityManager em = emf.createEntityManager();
+
+        ParsingMaster parser = new ParsingMaster(archiver.getTempFolderPath(), em);
+        try {
+            parser.readMessages(false, false);
+            System.out.println(parser.getFolderPath());
+            System.out.println(parser.getDuplicates());
+            System.out.println(parser.getPersisted());
+            System.out.println(parser.getMessageCounter());
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при четене на съобщения и запис!"));
+        }
+
+        em.close();
+        emf.close();
+
+        int a = 1;
+
+        try {
+            archiver.cleanup();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

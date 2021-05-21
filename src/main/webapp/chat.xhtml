@@ -27,7 +27,7 @@
 
             <div jsf:id="messages-wrapper" class="messages-wrapper">
                 <p:dataScroller value="#{reader.messageLazyModel}" rendered="#{reader.showChat}"
-                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" >
+                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller">
 
                     <p:ajax event="load" oncomplete="clearEmoticonContent()" />
 

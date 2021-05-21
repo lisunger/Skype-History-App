@@ -19,6 +19,16 @@ body {
   .ui-widget {
     font-family: inherit;
   }
+
+  .ui-button {
+    background: $colorSkypeBlue;
+    border: 1px solid $colorSkypeBlueBorder;
+
+    &.ui-state-hover {
+      background: $colorSkypeBlueDark;
+      border-color: $colorSkypeBlueDark;
+    }
+  }
 }
 
 .bold {
@@ -48,6 +58,102 @@ body {
   }
 }
 
+.details {
+
+  #export-uploader {
+
+    .ui-fileupload-buttonbar {
+      padding: 0;
+      background: 0;
+      border: 0;
+    }
+
+    .ui-fileupload-content {
+      padding: 4px;
+      border: 0;
+
+      .ui-fileupload-files {
+        display: block;
+        border-collapse: unset;
+        margin: auto;
+        border-spacing: unset;
+
+        & > div {
+          display: block;
+          vertical-align: unset;
+        }
+
+        .ui-fileupload-row {
+          display: flex;
+          flex-wrap: wrap;
+
+          & > div {
+            padding: 4px;
+            display: inline-block;
+          }
+
+          .ui-fileupload-preview {
+            display: none;
+          }
+
+          div:nth-child(2) {
+            width: 75%;
+          }
+
+          div:nth-child(3) {
+            width: 25%;
+            text-align: right;
+          }
+
+          div:nth-child(4) {
+            flex-grow: 1;
+            .ui-progressbar {
+              width: 100%;
+              height: 32px;
+              top: 0;
+            }
+          }
+
+          div:nth-child(5) {
+            .ui-button {
+              width: 32px;
+              height: 32px;
+            }
+          }
+        }
+
+        .ui-progressbar-value {
+          background: $colorSkypeOrange;
+        }
+      }
+    }
+
+    .ui-fileupload-choose,
+    .ui-fileupload-upload,
+    .ui-fileupload-cancel{
+      background: $colorSkypeBlue;
+      border: 0;
+      transition: background ease-in 0.1s;
+
+      &:hover {
+        background: $colorSkypeBlueDark;
+      }
+    }
+
+    .ui-fileupload-choose {
+
+      .ui-button-icon-left {
+        display: none;
+      }
+
+      .ui-button-text {
+        padding: 0.5rem 1rem;
+      }
+    }
+
+  }
+}
+
 /* Conversation details */
 .conversations-container {
   padding: 0;
@@ -57,33 +163,7 @@ body {
   .conversation-scroller.ui-datascroller {
 
     .ui-datascroller-content {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-    }
-
-    .ui-datascroller-content {
-
       padding: 0;
-
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: #888;
-      }
-
-      &::-webkit-scrollbar-thumb:hover {
-        background: #555;
-      }
-
-      .ui-datascroller-list {
-        width: 100%;
-      }
     }
 
     .conversation {
@@ -110,7 +190,7 @@ body {
         height: 50px;
         width: 50px;
         border-radius: 50%;
-        background-color: yellowgreen;
+        background-color: $colorSkypeGreen;
         flex-shrink: 0;
         position: relative;
 
@@ -148,6 +228,35 @@ body {
         }
 
       }
+    }
+  }
+}
+
+.messages-scroller.ui-datascroller,
+.conversation-scroller.ui-datascroller {
+  .ui-datascroller-content {
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #888888;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #555555;
+    }
+
+    .ui-datascroller-list {
+      width: 100%;
     }
   }
 }

@@ -19,6 +19,14 @@ body {
 body .ui-widget {
   font-family: inherit;
 }
+body .ui-button {
+  background: #00aff0;
+  border: 1px solid #0096cc;
+}
+body .ui-button.ui-state-hover {
+  background: #0078a3;
+  border-color: #0078a3;
+}
 
 .bold {
   font-weight: bold;
@@ -46,6 +54,77 @@ body .ui-widget {
     width: 1400px;
   }
 }
+.details #export-uploader .ui-fileupload-buttonbar {
+  padding: 0;
+  background: 0;
+  border: 0;
+}
+.details #export-uploader .ui-fileupload-content {
+  padding: 4px;
+  border: 0;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files {
+  display: block;
+  border-collapse: unset;
+  margin: auto;
+  border-spacing: unset;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files > div {
+  display: block;
+  vertical-align: unset;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row > div {
+  padding: 4px;
+  display: inline-block;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row .ui-fileupload-preview {
+  display: none;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(2) {
+  width: 75%;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(3) {
+  width: 25%;
+  text-align: right;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) {
+  flex-grow: 1;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) .ui-progressbar {
+  width: 100%;
+  height: 32px;
+  top: 0;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(5) .ui-button {
+  width: 32px;
+  height: 32px;
+}
+.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-progressbar-value {
+  background: #ffa552;
+}
+.details #export-uploader .ui-fileupload-choose,
+.details #export-uploader .ui-fileupload-upload,
+.details #export-uploader .ui-fileupload-cancel {
+  background: #00aff0;
+  border: 0;
+  transition: background ease-in 0.1s;
+}
+.details #export-uploader .ui-fileupload-choose:hover,
+.details #export-uploader .ui-fileupload-upload:hover,
+.details #export-uploader .ui-fileupload-cancel:hover {
+  background: #0078a3;
+}
+.details #export-uploader .ui-fileupload-choose .ui-button-icon-left {
+  display: none;
+}
+.details #export-uploader .ui-fileupload-choose .ui-button-text {
+  padding: 0.5rem 1rem;
+}
+
 /* Conversation details */
 .conversations-container {
   padding: 0;
@@ -53,28 +132,7 @@ body .ui-widget {
   overflow: hidden;
 }
 .conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
   padding: 0;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar {
-  width: 10px;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb {
-  background: #888;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content .ui-datascroller-list {
-  width: 100%;
 }
 .conversations-container .conversation-scroller.ui-datascroller .conversation {
   display: flex;
@@ -98,7 +156,7 @@ body .ui-widget {
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: yellowgreen;
+  background-color: #9acd32;
   flex-shrink: 0;
   position: relative;
 }
@@ -129,6 +187,34 @@ body .ui-widget {
   color: #8994a9;
   float: right;
   display: inline-block;
+}
+
+.messages-scroller.ui-datascroller .ui-datascroller-content,
+.conversation-scroller.ui-datascroller .ui-datascroller-content {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+.messages-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar,
+.conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar {
+  width: 10px;
+}
+.messages-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-track,
+.conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.messages-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb,
+.conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb {
+  background: #888888;
+}
+.messages-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb:hover,
+.conversation-scroller.ui-datascroller .ui-datascroller-content::-webkit-scrollbar-thumb:hover {
+  background: #555555;
+}
+.messages-scroller.ui-datascroller .ui-datascroller-content .ui-datascroller-list,
+.conversation-scroller.ui-datascroller .ui-datascroller-content .ui-datascroller-list {
+  width: 100%;
 }
 
 .chat .header {
@@ -201,7 +287,7 @@ ss {
   height: 24px;
   width: 24px;
   display: inline-block;
-  outline: 1px solid #00aff0;
+  outline: 1px solid #ffa552;
   /* font-size: 0; */
 }
 ss:after {
