@@ -15,11 +15,11 @@
     <div class="container">
         <div class="main-wrapper">
 
-            <p:messages id="messages" showDetail="true" closable="true">
+            <p:messages id="messages" showDetail="true" closable="true" >
                 <p:autoUpdate />
             </p:messages>
 
-            <h:form prependId="false">
+            <h:form id="page" prependId="false">
                 <div class="p-grid">
 
                     <div class="p-col-4">
@@ -28,8 +28,12 @@
                                 <ui:include src="details.xhtml"/>
                             </div>
 
-                            <div class="p-col-12">
+                            <div class="p-col-12" style="#{reader.statistics.get('convCount') > 0 ? '' : 'display:none'}">
                                 <ui:include src="chats.xhtml"/>
+                            </div>
+
+                            <div class="p-col-12">
+                                <ui:include src="upload.xhtml"/>
                             </div>
                         </div>
                     </div>
@@ -39,6 +43,12 @@
                     </div>
 
                 </div>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Сакън" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                    <p:commandButton value="Да" type="button" styleClass="ui-confirmdialog-yes" />
+                </p:confirmDialog>
+
             </h:form>
         </div>
     </div>

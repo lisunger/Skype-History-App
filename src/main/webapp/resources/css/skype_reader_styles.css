@@ -27,6 +27,30 @@ body .ui-button.ui-state-hover {
   background: #0078a3;
   border-color: #0078a3;
 }
+body .ui-chkbox .ui-chkbox-box.ui-state-active {
+  border-color: #00aff0;
+  background: #00aff0;
+  color: #ffffff;
+}
+body .ui-chkbox .ui-chkbox-box.ui-state-hover {
+  border-color: #00aff0;
+}
+body .ui-progressbar {
+  height: 1.5rem;
+}
+body .ui-progressbar .ui-progressbar-value {
+  background: #00aff0;
+}
+body .ui-progressbar .ui-progressbar-label {
+  color: #ffffff;
+  line-height: 1.5rem;
+}
+body .ui-card .ui-card-body {
+  padding: 0.5rem;
+}
+body .ui-card .ui-card-content {
+  padding: 0;
+}
 
 .bold {
   font-weight: bold;
@@ -35,13 +59,6 @@ body .ui-button.ui-state-hover {
 .main-wrapper {
   padding: 0.5em;
   height: 100vh;
-}
-
-/* Card */
-.card {
-  background-color: #ffffff;
-  border-radius: 4px;
-  padding: 0.5em;
 }
 
 /* Container */
@@ -54,74 +71,73 @@ body .ui-button.ui-state-hover {
     width: 1400px;
   }
 }
-.details #export-uploader .ui-fileupload-buttonbar {
+.upload #export-uploader .ui-fileupload-buttonbar {
   padding: 0;
   background: 0;
   border: 0;
 }
-.details #export-uploader .ui-fileupload-content {
+.upload #export-uploader .ui-fileupload-content {
   padding: 4px;
   border: 0;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files {
   display: block;
   border-collapse: unset;
   margin: auto;
   border-spacing: unset;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files > div {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files > div {
   display: block;
-  vertical-align: unset;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row {
   display: flex;
   flex-wrap: wrap;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row > div {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row > div {
   padding: 4px;
   display: inline-block;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row .ui-fileupload-preview {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row .ui-fileupload-preview {
   display: none;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(2) {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(2) {
   width: 75%;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(3) {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(3) {
   width: 25%;
   text-align: right;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) {
   flex-grow: 1;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) .ui-progressbar {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) .ui-progressbar {
   width: 100%;
   height: 32px;
   top: 0;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(5) .ui-button {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(5) .ui-button {
   width: 32px;
   height: 32px;
 }
-.details #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-progressbar-value {
+.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-progressbar-value {
   background: #ffa552;
 }
-.details #export-uploader .ui-fileupload-choose,
-.details #export-uploader .ui-fileupload-upload,
-.details #export-uploader .ui-fileupload-cancel {
+.upload #export-uploader .ui-fileupload-choose,
+.upload #export-uploader .ui-fileupload-upload,
+.upload #export-uploader .ui-fileupload-cancel {
   background: #00aff0;
   border: 0;
   transition: background ease-in 0.1s;
 }
-.details #export-uploader .ui-fileupload-choose:hover,
-.details #export-uploader .ui-fileupload-upload:hover,
-.details #export-uploader .ui-fileupload-cancel:hover {
+.upload #export-uploader .ui-fileupload-choose:hover,
+.upload #export-uploader .ui-fileupload-upload:hover,
+.upload #export-uploader .ui-fileupload-cancel:hover {
   background: #0078a3;
 }
-.details #export-uploader .ui-fileupload-choose .ui-button-icon-left {
+.upload #export-uploader .ui-fileupload-choose .ui-button-icon-left {
   display: none;
 }
-.details #export-uploader .ui-fileupload-choose .ui-button-text {
+.upload #export-uploader .ui-fileupload-choose .ui-button-text {
   padding: 0.5rem 1rem;
 }
 

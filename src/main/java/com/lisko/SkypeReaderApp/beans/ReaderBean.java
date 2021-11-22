@@ -9,11 +9,15 @@ import com.lisko.SkypeReaderApp.database.object.ConversationDetails;
 import com.lisko.SkypeReaderApp.database.object.Message;
 import com.lisko.SkypeReaderApp.parsing.ArchiveMaster;
 import com.lisko.SkypeReaderApp.parsing.ParsingMaster;
+import org.primefaces.PrimeFaces;
+import org.primefaces.component.progressbar.ProgressBar;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.file.UploadedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -30,6 +34,7 @@ import java.util.*;
 public class ReaderBean implements Serializable {
 
     private static final TimeZone timeZone = TimeZone.getDefault();
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReaderBean.class);
 
     private DatabaseDao dbDao;
     private Map<String, Object> statistics;
@@ -41,13 +46,29 @@ public class ReaderBean implements Serializable {
     private LazyDataModel<Message> messageLazyModel;
     private boolean showChat;
 
+    private boolean displayUploadSection = false;
+    private boolean persistMessages = true;
+    private boolean persistFiles = true;
+    private ParsingMaster parser;
+
+    private ProgressBar progressBarMessages;
+    private ProgressBar progressBarFiles;
+
 
     @PostConstruct
     public void initData() {
+        LOGGER.debug("ReaderBean initData()");
         this.dbDao = new DatabaseDao();
         this.statistics = new HashMap<>();
         this.conversations = new ArrayList<>();
         this.showChat = false;
+
+        readStatistics();
+    }
+
+    private void readStatistics() {
+        this.statistics.clear();
+        this.conversations.clear();
 
         try {
             this.statistics.put("exportDate", this.dbDao.getExportDate());
@@ -57,6 +78,7 @@ public class ReaderBean implements Serializable {
             this.conversations = this.dbDao.getConversationDetails();
         } catch (DatabaseErrorException e) {
             e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при връзка с базата данни!"));
         }
     }
 
@@ -78,34 +100,51 @@ public class ReaderBean implements Serializable {
         catch(IOException e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при разархивиране и четене на архива!"));
+            return;
         }
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("lisko");
-        EntityManager em = emf.createEntityManager();
+        this.displayUploadSection = true;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, "Архивът е поставен в: " + ArchiveMaster.getTempFolderPath()));
+    }
 
-        ParsingMaster parser = new ParsingMaster(archiver.getTempFolderPath(), em);
-        try {
-            parser.readMessages(false, false);
-            System.out.println(parser.getFolderPath());
-            System.out.println(parser.getDuplicates());
-            System.out.println(parser.getPersisted());
-            System.out.println(parser.getMessageCounter());
-        }
-        catch(IOException e) {
-            e.printStackTrace();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при четене на съобщения и запис!"));
-        }
+    public void processUploadedArchive() {
 
-        em.close();
-        emf.close();
+        Runnable runnable = () -> {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("lisko");
+            EntityManager em = emf.createEntityManager();
 
-        int a = 1;
+            this.parser = new ParsingMaster(ArchiveMaster.getTempFolderPath(), em);
+            try {
+                if(this.persistMessages) {
+                    this.parser.processMessages(true, false);
+                }
+                if(this.persistFiles) {
+                    this.parser.processFiles(true, false);
+                }
 
-        try {
-            archiver.cleanup();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                LOGGER.debug("Temp folder: " + parser.getFolderPath());
+                LOGGER.debug("Duplicate messages: " + parser.getDuplicateMessages());
+                LOGGER.debug("New messages: " + parser.getNewMessages());
+                LOGGER.debug("Duplicate files: " + parser.getDuplicateFiles());
+                LOGGER.debug("New files: " + parser.getNewFiles());
+                LOGGER.debug("Read messages: " + parser.getPersistedMessages());
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Грешка при четене на съобщения и запис!"));
+            }
+
+            em.close();
+            emf.close();
+
+            try {
+                ArchiveMaster.cleanupTempFolder();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        };
+        runnable.run();
+
     }
 
     public void actionChooseChat(int index) {
@@ -125,6 +164,18 @@ public class ReaderBean implements Serializable {
     public void actionLoadMessages() {
         this.messageLazyModel = new MessagesLazyDataModel(this.selectedChat.getId(), this.filterDateBegin);
         this.showChat = true;
+    }
+
+    public void deleteDatabase() {
+        LOGGER.debug("Deleting database");
+        Jpa.getInstance().begin();
+        Jpa.getInstance().getEntityManager().createQuery("delete from file").executeUpdate();
+        Jpa.getInstance().getEntityManager().createQuery("delete from message").executeUpdate();
+        Jpa.getInstance().getEntityManager().createQuery("delete from conversation").executeUpdate();
+        Jpa.getInstance().getEntityManager().createQuery("delete from export_version ").executeUpdate();
+        Jpa.getInstance().commit();
+
+        readStatistics();
     }
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -187,5 +238,73 @@ public class ReaderBean implements Serializable {
 
     public void setShowChat(boolean showChat) {
         this.showChat = showChat;
+    }
+
+    public boolean isPersistMessages() {
+        return persistMessages;
+    }
+
+    public void setPersistMessages(boolean persistMessages) {
+        this.persistMessages = persistMessages;
+    }
+
+    public boolean isPersistFiles() {
+        return persistFiles;
+    }
+
+    public void setPersistFiles(boolean persistFiles) {
+        this.persistFiles = persistFiles;
+    }
+
+    public boolean isDisplayUploadSection() {
+        return displayUploadSection;
+    }
+
+    public void setDisplayUploadSection(boolean displayUploadSection) {
+        this.displayUploadSection = displayUploadSection;
+    }
+
+    public int getUploadProgressMessages() {
+        double result = 0;
+        if(this.parser != null) {
+            result = this.parser.getPersistedMessages() / (double) this.parser.getMessageCount();
+            result *= 100;
+        }
+        System.out.println("getUploadProgressMessages " + result);
+        return (int) result;
+    }
+
+    public int getUploadProgressFiles() {
+        double result = 0;
+        if(this.parser != null) {
+            result = this.parser.getPersistedFiles() / (double) this.parser.getFileCount();
+            result *= 100;
+        }
+        System.out.println("getUploadProgressFiles " + result);
+        return (int) result;
+    }
+
+    public ProgressBar getProgressBarMessages() {
+        return progressBarMessages;
+    }
+
+    public void setProgressBarMessages(ProgressBar progressBarMessages) {
+        this.progressBarMessages = progressBarMessages;
+    }
+
+    public ProgressBar getProgressBarFiles() {
+        return progressBarFiles;
+    }
+
+    public void setProgressBarFiles(ProgressBar progressBarFiles) {
+        this.progressBarFiles = progressBarFiles;
+    }
+
+    public ParsingMaster getParser() {
+        return parser;
+    }
+
+    public void setParser(ParsingMaster parser) {
+        this.parser = parser;
     }
 }

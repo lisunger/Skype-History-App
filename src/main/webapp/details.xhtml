@@ -6,11 +6,10 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-    <div class="details">
-        <div class="card p-shadow-4">
-            <div class="p-grid">
+    <div jsf:id="panel-details">
+        <p:card class="p-shadow-4">
+            <div class="p-grid" style="margin-bottom: -0.5rem;">
                 <div class="p-col-12">
-
                     <div>
                         <span class="bold">Дата на последен експорт: </span>
                         <h:outputText value="#{reader.statistics.get('exportDate')}">
@@ -27,20 +26,8 @@
                     </div>
 
                 </div>
-
-                <div class="p-col-12">
-                    <p:fileUpload id="export-uploader"
-                        mode="advanced"
-                        multiple="false" auto="false"
-                        allowTypes="/(\.|\/)(tar)$/"
-                        accept="application/x-tar"
-                        invalidFileMessage="only tar is allowed"
-                        label="Нов експорт"
-                        sizeLimit="17179869184"
-                        listener="#{reader.actionFileUpload}"/>
-                </div>
             </div>
-        </div>
+        </p:card>
     </div>
 
 </ui:composition>

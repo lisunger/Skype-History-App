@@ -5,6 +5,7 @@ import com.lisko.SkypeReaderApp.database.Jpa;
 import com.lisko.SkypeReaderApp.database.object.ConversationDetails;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,9 @@ public class DatabaseDao {
         try {
             String sql = "select e.id.date from export_version e";
             return getEntityManager().createQuery(sql, Date.class).getSingleResult();
+        }
+        catch(NoResultException e) {
+            return null;
         }
         catch(Exception e) {
             throw new DatabaseErrorException(e);

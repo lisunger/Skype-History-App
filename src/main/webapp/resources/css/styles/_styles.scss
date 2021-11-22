@@ -1,345 +1,364 @@
-@import url('https://fonts.googleapis.com/css2?family=Arsenal&family=El+Messiri&family=Ruda&family=Ubuntu+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Arsenal&family=El+Messiri&family=Ruda&family=Ubuntu+Mono&display=swap");
 
 html {
-  height: 100%;
+	height: 100%;
 }
 
 body {
-  font-family: "Ubuntu Mono";
-  font-family: "Ruda";
-  font-family: "Arsenal";
-  font-family: "El Messiri", Roboto, sans-serif;
-  font-size: $fontSize;
-  color: $colorFont;
-  padding: 0;
-  margin: 0;
-  min-height: 100%;
-  background: $colorSkypeBlue linear-gradient(135deg, $colorSkypeBlue 50%, $colorSkypeBlueDark 100%);
+	font-family: "Ubuntu Mono";
+	font-family: "Ruda";
+	font-family: "Arsenal";
+	font-family: "El Messiri", Roboto, sans-serif;
+	font-size: $fontSize;
+	color: $colorFont;
+	padding: 0;
+	margin: 0;
+	min-height: 100%;
+	background: $colorSkypeBlue linear-gradient(135deg, $colorSkypeBlue 50%, $colorSkypeBlueDark 100%);
 
-  .ui-widget {
-    font-family: inherit;
-  }
+	.ui-widget {
+		font-family: inherit;
+	}
 
-  .ui-button {
-    background: $colorSkypeBlue;
-    border: 1px solid $colorSkypeBlueBorder;
+	.ui-button {
+		background: $colorSkypeBlue;
+		border: 1px solid $colorSkypeBlueBorder;
 
-    &.ui-state-hover {
-      background: $colorSkypeBlueDark;
-      border-color: $colorSkypeBlueDark;
-    }
-  }
+		&.ui-state-hover {
+			background: $colorSkypeBlueDark;
+			border-color: $colorSkypeBlueDark;
+		}
+	}
+
+	.ui-chkbox {
+		.ui-chkbox-box {
+			&.ui-state-active {
+				border-color: $colorSkypeBlue;
+				background: $colorSkypeBlue;
+				color: #ffffff;
+			}
+			&.ui-state-hover {
+				border-color: $colorSkypeBlue;
+			}
+		}
+	}
+
+	.ui-progressbar {
+		height: 1.5rem;
+
+		.ui-progressbar-value {
+			background: $colorSkypeBlue;
+		}
+
+		.ui-progressbar-label {
+			color: #ffffff;
+			line-height: 1.5rem;
+		}
+	}
+
+	.ui-card {
+
+		.ui-card-body {
+			padding: 0.5rem;
+		}
+
+		.ui-card-content {
+			padding: 0;
+		}
+	}
 }
 
 .bold {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .main-wrapper {
-  padding: 0.5em;
-  height: 100vh;
-}
-
-/* Card */
-.card {
-  background-color: #ffffff;
-  border-radius: $roundness;
-  padding: 0.5em;
+	padding: 0.5em;
+	height: 100vh;
 }
 
 /* Container */
 .container {
-  margin: auto;
+	margin: auto;
 }
 
-@media ( min-width : 1440px) {
-  .container {
-    width: 1400px;
-  }
+@media (min-width: 1440px) {
+	.container {
+		width: 1400px;
+	}
 }
 
-.details {
+.upload {
+	#export-uploader {
+		.ui-fileupload-buttonbar {
+			padding: 0;
+			background: 0;
+			border: 0;
+		}
 
-  #export-uploader {
+		.ui-fileupload-content {
+			padding: 4px;
+			border: 0;
 
-    .ui-fileupload-buttonbar {
-      padding: 0;
-      background: 0;
-      border: 0;
-    }
+			.ui-fileupload-files {
+				display: block;
+				border-collapse: unset;
+				margin: auto;
+				border-spacing: unset;
 
-    .ui-fileupload-content {
-      padding: 4px;
-      border: 0;
+				& > div {
+					display: block;
+				}
 
-      .ui-fileupload-files {
-        display: block;
-        border-collapse: unset;
-        margin: auto;
-        border-spacing: unset;
+				.ui-fileupload-row {
+					display: flex;
+					flex-wrap: wrap;
 
-        & > div {
-          display: block;
-          vertical-align: unset;
-        }
+					& > div {
+						padding: 4px;
+						display: inline-block;
+					}
 
-        .ui-fileupload-row {
-          display: flex;
-          flex-wrap: wrap;
+					.ui-fileupload-preview {
+						display: none;
+					}
 
-          & > div {
-            padding: 4px;
-            display: inline-block;
-          }
+					div:nth-child(2) {
+						width: 75%;
+					}
 
-          .ui-fileupload-preview {
-            display: none;
-          }
+					div:nth-child(3) {
+						width: 25%;
+						text-align: right;
+					}
 
-          div:nth-child(2) {
-            width: 75%;
-          }
+					div:nth-child(4) {
+						flex-grow: 1;
+						.ui-progressbar {
+							width: 100%;
+							height: 32px;
+							top: 0;
+						}
+					}
 
-          div:nth-child(3) {
-            width: 25%;
-            text-align: right;
-          }
+					div:nth-child(5) {
+						.ui-button {
+							width: 32px;
+							height: 32px;
+						}
+					}
+				}
 
-          div:nth-child(4) {
-            flex-grow: 1;
-            .ui-progressbar {
-              width: 100%;
-              height: 32px;
-              top: 0;
-            }
-          }
+				.ui-progressbar-value {
+					background: $colorSkypeOrange;
+				}
+			}
+		}
 
-          div:nth-child(5) {
-            .ui-button {
-              width: 32px;
-              height: 32px;
-            }
-          }
-        }
+		.ui-fileupload-choose,
+		.ui-fileupload-upload,
+		.ui-fileupload-cancel {
+			background: $colorSkypeBlue;
+			border: 0;
+			transition: background ease-in 0.1s;
 
-        .ui-progressbar-value {
-          background: $colorSkypeOrange;
-        }
-      }
-    }
+			&:hover {
+				background: $colorSkypeBlueDark;
+			}
+		}
 
-    .ui-fileupload-choose,
-    .ui-fileupload-upload,
-    .ui-fileupload-cancel{
-      background: $colorSkypeBlue;
-      border: 0;
-      transition: background ease-in 0.1s;
+		.ui-fileupload-choose {
+			.ui-button-icon-left {
+				display: none;
+			}
 
-      &:hover {
-        background: $colorSkypeBlueDark;
-      }
-    }
-
-    .ui-fileupload-choose {
-
-      .ui-button-icon-left {
-        display: none;
-      }
-
-      .ui-button-text {
-        padding: 0.5rem 1rem;
-      }
-    }
-
-  }
+			.ui-button-text {
+				padding: 0.5rem 1rem;
+			}
+		}
+	}
 }
 
 /* Conversation details */
 .conversations-container {
-  padding: 0;
-  border-radius: $roundness;
-  overflow: hidden;
+	padding: 0;
+	border-radius: $roundness;
+	overflow: hidden;
 
-  .conversation-scroller.ui-datascroller {
+	.conversation-scroller.ui-datascroller {
+		.ui-datascroller-content {
+			padding: 0;
+		}
 
-    .ui-datascroller-content {
-      padding: 0;
-    }
+		.conversation {
+			display: flex;
+			align-items: start;
+			padding: 4px;
+			border: 1px solid $colorBorder;
+			margin-bottom: 4px;
+			cursor: pointer;
+			background-color: white;
+			color: $colorSkypeBlue;
+			transition: background-color 0.1s ease-in;
 
-    .conversation {
-      display: flex;
-      align-items: start;
-      padding: 4px;
-      border: 1px solid $colorBorder;
-      margin-bottom: 4px;
-      cursor: pointer;
-      background-color: white;
-      color: $colorSkypeBlue;
-      transition: background-color 0.1s ease-in;
+			&:hover {
+				background-color: $colorSkypeBlueLight;
+				text-decoration: none;
+			}
 
-      &:hover {
-        background-color: $colorSkypeBlueLight;
-        text-decoration: none;
-      }
+			&.highlighted {
+				background-color: $colorSkypeBlueMid;
+			}
 
-      &.highlighted {
-        background-color: $colorSkypeBlueMid;
-      }
+			.icon {
+				height: 50px;
+				width: 50px;
+				border-radius: 50%;
+				background-color: $colorSkypeGreen;
+				flex-shrink: 0;
+				position: relative;
 
-      .icon {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        background-color: $colorSkypeGreen;
-        flex-shrink: 0;
-        position: relative;
+				span {
+					position: absolute;
+					left: 50%;
+					top: 50%;
+					transform: translate(-50%, -50%);
+					text-transform: uppercase;
+					font-weight: bold;
+					font-size: 1.5em;
+					color: white;
+					font-family: "Ubuntu Mono", sans-serif;
+				}
+			}
 
-        span {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%,-50%);
-          text-transform: uppercase;
-          font-weight: bold;
-          font-size: 1.5em;
-          color: white;
-          font-family: "Ubuntu Mono",  sans-serif;
-        }
-      }
+			.detail {
+				flex-grow: 1;
+				white-space: nowrap;
+				overflow-x: hidden;
+				margin-left: 0.5em;
 
-      .detail {
-        flex-grow: 1;
-        white-space: nowrap;
-        overflow-x: hidden;
-        margin-left: 0.5em;
+				.name {
+					font-weight: bold;
+				}
 
-        .name {
-          font-weight: bold;
-        }
+				.messages-count {
+					color: $colorFontLight;
+				}
 
-        .messages-count {
-          color: $colorFontLight;
-        }
-
-        .date {
-          color: $colorFontLight;
-          float: right;
-          display: inline-block;
-        }
-
-      }
-    }
-  }
+				.date {
+					color: $colorFontLight;
+					float: right;
+					display: inline-block;
+				}
+			}
+		}
+	}
 }
 
 .messages-scroller.ui-datascroller,
 .conversation-scroller.ui-datascroller {
-  .ui-datascroller-content {
+	.ui-datascroller-content {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
 
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+		&::-webkit-scrollbar {
+			width: 10px;
+		}
 
-    &::-webkit-scrollbar {
-      width: 10px;
-    }
+		&::-webkit-scrollbar-track {
+			background: #f1f1f1;
+		}
 
-    &::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
+		&::-webkit-scrollbar-thumb {
+			background: #888888;
+		}
 
-    &::-webkit-scrollbar-thumb {
-      background: #888888;
-    }
+		&::-webkit-scrollbar-thumb:hover {
+			background: #555555;
+		}
 
-    &::-webkit-scrollbar-thumb:hover {
-      background: #555555;
-    }
-
-    .ui-datascroller-list {
-      width: 100%;
-    }
-  }
+		.ui-datascroller-list {
+			width: 100%;
+		}
+	}
 }
 
 .chat {
-  .header {
-    height: 100px;
-    border-bottom: 1px solid $colorBorder;
+	.header {
+		height: 100px;
+		border-bottom: 1px solid $colorBorder;
 
-    .chat-title {
-      font-size: 1.5em;
-      font-weight: bold;
-    }
+		.chat-title {
+			font-size: 1.5em;
+			font-weight: bold;
+		}
 
-    .filter {
-      display: flex;
-      align-items: flex-end;
+		.filter {
+			display: flex;
+			align-items: flex-end;
 
-      &>div:not(:last-child) {
-        margin-right: 0.5em;
-      }
+			& > div:not(:last-child) {
+				margin-right: 0.5em;
+			}
 
-      .label {
-        vertical-align: bottom;
-      }
-    }
-  }
+			.label {
+				vertical-align: bottom;
+			}
+		}
+	}
 
-  .messages-wrapper {
+	.messages-wrapper {
+		.ui-datascroller-item {
+			.message {
+				display: inline-block;
+				max-width: 660px;
+				background-color: $colorSkypeBlueLight;
+				padding: 0.25em 0.5em;
+				float: left;
+				clear: both;
+				cursor: pointer;
+				border-radius: 0 $messageRoundness $messageRoundness 0;
+				word-break: break-word;
+				position: relative;
+				transition: background-color 0.1s ease-in;
 
-    .ui-datascroller-item {
+				&:hover {
+					background-color: $colorSkypeBlueLight2;
 
-      .message {
-        display: inline-block;
-        max-width: 660px;
-        background-color: $colorSkypeBlueLight;
-        padding: 0.25em 0.5em;
-        float: left;
-        clear: both;
-        cursor: pointer;
-        border-radius:  0 $messageRoundness $messageRoundness 0;
-        word-break: break-word;
-        position: relative;
-        transition: background-color 0.1s ease-in;
+					.date {
+						display: block;
+					}
+				}
 
-        &:hover {
-          background-color: $colorSkypeBlueLight2;
+				.date {
+					position: absolute;
+					width: 120px;
+					font-size: 0.75em;
+					color: $colorFontLight;
+					left: calc(100% + 1em);
+					font-family: Ruda, sans-serif;
+					display: none;
+				}
 
-          .date {
-            display: block;
-          }
-        }
+				&:not(last-of-type) {
+					margin-bottom: 0.25em;
+				}
 
-        .date {
-          position: absolute;
-          width: 120px;
-          font-size: 0.75em;
-          color: $colorFontLight;
-          left: calc(100% + 1em);
-          font-family: Ruda, sans-serif;
-          display: none;
-        }
+				&.my {
+					background-color: $colorSkypeBlueMid;
+					float: right;
+					border-radius: $messageRoundness 0 0 $messageRoundness;
 
-        &:not(last-of-type) {
-          margin-bottom: 0.25em;
-        }
+					&:hover {
+						background-color: $colorSkypeBlueMid2;
+					}
 
-        &.my {
-          background-color: $colorSkypeBlueMid;
-          float: right;
-          border-radius: $messageRoundness 0 0 $messageRoundness;
-
-          &:hover {
-            background-color: $colorSkypeBlueMid2;
-          }
-
-          .date {
-            left: unset;
-            right: calc(100% + 1em);
-          }
-        }
-
-      }
-    }
-  }
+					.date {
+						left: unset;
+						right: calc(100% + 1em);
+					}
+				}
+			}
+		}
+	}
 }

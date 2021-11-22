@@ -29,14 +29,14 @@ import java.util.Comparator;
  */
 public class ArchiveMaster {
 
-    public static final String TEMP_FOLDER_PATH =       "C:/lisko/temp/";
+    public static final String TEMP_FOLDER_STRING =       "C:/lisko/temp/";
     private static final String MESSAGES_FILE_NAME =    "messages.json";
     private static final String MEDIA_FOLDER_NAME =     "media";
+    private static final Path tempFolderPath = Paths.get(TEMP_FOLDER_STRING);
 
     private final UploadedFile uploadedFile;
     private final String uploadedFileName;
     private File archiveCopyFile;
-    private Path tempFolderPath;
 
     public ArchiveMaster(FileUploadEvent fileUploadEvent) {
         this.uploadedFile = fileUploadEvent.getFile();
@@ -58,27 +58,24 @@ public class ArchiveMaster {
     }
 
     /**
-     * Create a temp folder at the location of {@link ArchiveMaster#TEMP_FOLDER_PATH}.
+     * Create a temp folder at the location of {@link ArchiveMaster#TEMP_FOLDER_STRING}.
      * If the folder already exists, the contents are removed first.
      * @return Path to the temp folder.
      * @throws IOException
      */
     private void createTempFolder() throws IOException {
-        Path tempPath = Paths.get(TEMP_FOLDER_PATH);
-        if(tempPath.toFile().exists()) {
-            Files.walk(tempPath)
+        if(tempFolderPath.toFile().exists()) {
+            Files.walk(tempFolderPath)
                     .sorted(Comparator.reverseOrder())
                     .map(Path::toFile)
                     .forEach(File::delete);
         }
-        tempPath.toFile().mkdirs();
-        this.archiveCopyFile = new File(tempPath.toFile(), this.uploadedFile.getFileName());
-
-        this.tempFolderPath = tempPath;
+        tempFolderPath.toFile().mkdirs();
+        this.archiveCopyFile = new File(tempFolderPath.toFile(), this.uploadedFile.getFileName());
     }
 
     private void copyArchiveToTemp() throws IOException {
-        this.archiveCopyFile = new File(this.tempFolderPath.toFile(), this.uploadedFileName);
+        this.archiveCopyFile = new File(tempFolderPath.toFile(), this.uploadedFileName);
         Files.copy(this.uploadedFile.getInputStream(), this.archiveCopyFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
@@ -86,7 +83,7 @@ public class ArchiveMaster {
         TarArchiveInputStream tarArchiveStream = new TarArchiveInputStream(this.uploadedFile.getInputStream());
         TarArchiveEntry tarEntry = tarArchiveStream.getNextTarEntry();
         while (tarEntry != null) {
-            File destPath = new File(this.tempFolderPath.toFile(), tarEntry.getName());
+            File destPath = new File(tempFolderPath.toFile(), tarEntry.getName());
 
             if(tarEntry.isDirectory()) {
                 //System.out.println("Directory \t\t" + tarEntry.getName() + "\t\t\t" + tarEntry.getFile());
@@ -114,7 +111,7 @@ public class ArchiveMaster {
     }
 
     public void traverseFiles() throws IOException {
-        Path messagesFile = Files.list(this.tempFolderPath).filter(p ->
+        Path messagesFile = Files.list(tempFolderPath).filter(p ->
                 !Files.isDirectory(p) && p.getFileName().toString().equals(MESSAGES_FILE_NAME)
         ).findFirst().orElse(null);
 
@@ -126,7 +123,7 @@ public class ArchiveMaster {
             System.out.println("... parsing messages... done");
         }
 
-        Path mediaFolder = Files.list(this.tempFolderPath).filter(p ->
+        Path mediaFolder = Files.list(tempFolderPath).filter(p ->
                 Files.isDirectory(p) && p.getFileName().toString().equals(MEDIA_FOLDER_NAME)
         ).findFirst().orElse(null);
 
@@ -143,7 +140,7 @@ public class ArchiveMaster {
         }
     }
 
-    public void cleanup() throws IOException {
+    public static void cleanupTempFolder() throws IOException {
         System.out.println("Cleaning up...");
         Files.walk(Paths.get("C:/lisko"))
                 .sorted(Comparator.reverseOrder())
@@ -167,11 +164,8 @@ public class ArchiveMaster {
         this.archiveCopyFile = archiveCopyFile;
     }
 
-    public Path getTempFolderPath() {
+    public static Path getTempFolderPath() {
         return tempFolderPath;
     }
 
-    public void setTempFolderPath(Path tempFolderPath) {
-        this.tempFolderPath = tempFolderPath;
-    }
 }

@@ -1,0 +1,83 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+    <p:commandButton widgetVar="buttonDestroyEverything" styleClass="rounded-button ui-button-danger"
+                     actionListener="#{reader.deleteDatabase()}" update="page"
+                     title="Изтриване на базата" icon="fas fa-skull-crossbones">
+        <p:confirm message="Изтриване на базата?" icon="fas fa-exclamation-triangle" />
+    </p:commandButton>
+    <p:commandButton id="btn-toggle-settings" type="button" icon="fas fa-wrench" styleClass="rounded-button ui-button-warning p-mb-2 p-ml-2"
+                     onclick="$('#btn-toggle-settings').toggleClass('ui-button-outlined'); $('#panel-upload').slideToggle()"/>
+
+    <div jsf:id="panel-upload" class="upload" style="#{reader.displayUploadSection ? '' : 'display: none;'}">
+        <p:card class="p-shadow-4">
+            <div class="p-grid" style="margin-bottom: -0.5rem;">
+                <div id="field-new-export" class="p-col-12" jsf:rendered="#{!reader.displayUploadSection}">
+                    <p:fileUpload id="export-uploader"
+                        mode="advanced"
+                        multiple="false" auto="false"
+                        allowTypes="/(\.|\/)(tar)$/"
+                        accept="application/x-tar"
+                        invalidFileMessage="only tar is allowed"
+                        label="Качване на нов експорт"
+                        uploadLabel="ОК"
+                        cancelLabel="Отказ"
+                        fileLimit="1"
+                        sizeLimit="3221225472"
+                        listener="#{reader.actionFileUpload}"
+                        update="panel-upload"/>
+                </div>
+
+                <div jsf:id="uploadSection" class="p-col-12" jsf:rendered="#{reader.displayUploadSection}">
+                    <div class="p-grid">
+
+                        <div class="p-col-12">
+                            <div>Какво да се запази?</div>
+
+                            <p:selectBooleanCheckbox value="#{reader.persistMessages}" itemLabel="Съобщения">
+                                <p:ajax event="change" partialSubmit="true" process="@this"/>
+                            </p:selectBooleanCheckbox>
+
+                            <p:selectBooleanCheckbox value="#{reader.persistFiles}" itemLabel="Файлове">
+                                <p:ajax event="change" partialSubmit="true" process="@this" />
+                            </p:selectBooleanCheckbox>
+                        </div>
+
+                        <div class="p-col-12">
+                            <div>Запис на съобщения</div>
+                                <p:progressBar id="progress-upload-messages" widgetVar="progressUploadMessages" ajax="true" value="#{reader.uploadProgressMessages}"
+                                    labelTemplate="#{reader.parser.getPersistedMessages()} / #{reader.parser.getMessageCount()}" binding="#{reader.progressBarMessages}"/>
+                        </div>
+
+                        <div class="p-col-12">
+                            <div>Запис на файлове</div>
+                                <p:progressBar id="progress-upload-files" widgetVar="progressUploadFiles" ajax="true" value="#{reader.uploadProgressFiles}"
+                                    labelTemplate="#{reader.parser.getPersistedFiles()} / #{reader.parser.getFileCount()}" binding="#{reader.progressBarFiles}"/>
+                        </div>
+
+                        <p:poll widgetVar="pollUploadProgress" async="true" autoStart="false" interval="2" process="@this" update="progress-upload-messages progress-upload-files"/>
+
+                        <div class="p-col-12">
+                            <!-- Start button -->
+                            <p:commandButton widgetVar="buttonStartUpload" value="Старт" icon="fas fa-play" actionListener="#{reader.processUploadedArchive}"
+                                update="panel-details panel-upload" styleClass="ui-button-success p-mr-2"
+                                onstart="PF('pollUploadProgress').start(); PF('buttonStartUpload').disable(); PF('buttonStopUpload').enable();PF('buttonDestroyEverything').disable()"
+                                oncomplete="PF('pollUploadProgress').stop();PF('buttonDestroyEverything').enable()"/>
+
+                            <!-- Stop button -->
+                            <p:commandButton widgetVar="buttonStopUpload" value="Стоп" icon="fas fa-stop" update="panel-details" styleClass="ui-button-danger" disabled="true" partialSubmit="true" process="@none"/>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </p:card>
+    </div>
+
+</ui:composition>

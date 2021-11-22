@@ -10,6 +10,7 @@
     <class>com.lisko.SkypeReaderApp.database.object.Conversation</class>
     <class>com.lisko.SkypeReaderApp.database.object.Message</class>
     <class>com.lisko.SkypeReaderApp.database.object.ConversationDetails</class>
+    <class>com.lisko.SkypeReaderApp.database.object.SkypeFile</class>
 
     <properties>
       <property name="db.vendor.name" value="postgresql" />
