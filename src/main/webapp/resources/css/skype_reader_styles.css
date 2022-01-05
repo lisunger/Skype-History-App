@@ -1,21 +1,5 @@
 /* Colors */
 @import url("https://fonts.googleapis.com/css2?family=Arsenal&family=El+Messiri&family=Ruda&family=Ubuntu+Mono&display=swap");
-html {
-  height: 100%;
-}
-
-body {
-  font-family: "Ubuntu Mono";
-  font-family: "Ruda";
-  font-family: "Arsenal";
-  font-family: "El Messiri", Roboto, sans-serif;
-  font-size: 16px;
-  color: #4c566a;
-  padding: 0;
-  margin: 0;
-  min-height: 100%;
-  background: #00aff0 linear-gradient(135deg, #00aff0 50%, #0078a3 100%);
-}
 body .ui-widget {
   font-family: inherit;
 }
@@ -23,9 +7,24 @@ body .ui-button {
   background: #00aff0;
   border: 1px solid #0096cc;
 }
+body .ui-button.ui-button-icon-only .ui-button-text {
+  padding: 0.25rem;
+}
 body .ui-button.ui-state-hover {
   background: #0078a3;
   border-color: #0078a3;
+}
+body .ui-inputfield {
+  padding: 0.25rem;
+}
+body .ui-datepicker .ui-datepicker-group {
+  padding: 0;
+}
+body .ui-datepicker .ui-datepicker-header {
+  padding: 0.5rem;
+}
+body .ui-datepicker .ui-datepicker-calendar td, body .ui-datepicker .ui-datepicker-calendar th {
+  padding: 0.25rem;
 }
 body .ui-chkbox .ui-chkbox-box.ui-state-active {
   border-color: #00aff0;
@@ -36,6 +35,7 @@ body .ui-chkbox .ui-chkbox-box.ui-state-hover {
   border-color: #00aff0;
 }
 body .ui-progressbar {
+  background: #cccccc;
   height: 1.5rem;
 }
 body .ui-progressbar .ui-progressbar-value {
@@ -51,19 +51,119 @@ body .ui-card .ui-card-body {
 body .ui-card .ui-card-content {
   padding: 0;
 }
-
-.bold {
-  font-weight: bold;
+body .ui-fileupload .ui-fileupload-buttonbar {
+  padding: 0;
+  background: 0;
+  border: 0;
+}
+body .ui-fileupload .ui-fileupload-buttonbar .ui-button.ui-fileupload-choose .ui-icon {
+  display: none;
+}
+body .ui-fileupload .ui-fileupload-content {
+  padding: 4px;
+  border: 0;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files {
+  display: block;
+  border-collapse: unset;
+  margin: auto;
+  border-spacing: unset;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files > div {
+  display: block;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row > div {
+  padding: 4px;
+  display: inline-block;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row .ui-fileupload-preview {
+  display: none;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(2) {
+  width: 75%;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(3) {
+  width: 25%;
+  text-align: right;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) {
+  flex-grow: 1;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) .ui-progressbar {
+  width: 100%;
+  height: 32px;
+  top: 0;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(5) .ui-button {
+  width: 32px;
+  height: 32px;
+}
+body .ui-fileupload .ui-fileupload-content .ui-fileupload-files .ui-progressbar-value {
+  background: #ffa552;
+}
+body .ui-fileupload .ui-fileupload-choose,
+body .ui-fileupload .ui-fileupload-upload,
+body .ui-fileupload .ui-fileupload-cancel {
+  background: #00aff0;
+  border: 0;
+  transition: background ease-in 0.1s;
+}
+body .ui-fileupload .ui-fileupload-choose:hover,
+body .ui-fileupload .ui-fileupload-upload:hover,
+body .ui-fileupload .ui-fileupload-cancel:hover {
+  background: #0078a3;
+}
+body .ui-fileupload .ui-fileupload-choose .ui-button-text {
+  padding: 0.5rem 1rem;
+}
+body .ui-dialog .ui-dialog-titlebar {
+  padding: 0.5rem;
+}
+body .ui-dialog .ui-dialog-content {
+  padding: 0.5rem;
+}
+body .ui-selectonemenu {
+  vertical-align: top;
+}
+body .ui-selectonemenu .ui-selectonemenu-label {
+  min-height: initial;
+  padding: 0.25rem 0.25rem;
+}
+body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item {
+  padding: 0.25rem 0.5rem;
 }
 
-.main-wrapper {
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Ubuntu Mono";
+  font-family: "Ruda";
+  font-family: "Arsenal";
+  font-family: "El Messiri", Roboto, sans-serif;
+  font-size: 16px;
+  color: #4c566a;
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  background: #00aff0 linear-gradient(135deg, #00aff0 50%, #0078a3 100%);
+  background-attachment: fixed;
+}
+body .container {
+  margin: auto;
+}
+body .main-wrapper {
   padding: 0.5em;
   height: 100vh;
 }
 
-/* Container */
-.container {
-  margin: auto;
+input::placeholder {
+  font-family: "El Messiri", Roboto, sans-serif;
 }
 
 @media (min-width: 1440px) {
@@ -71,140 +171,6 @@ body .ui-card .ui-card-content {
     width: 1400px;
   }
 }
-.upload #export-uploader .ui-fileupload-buttonbar {
-  padding: 0;
-  background: 0;
-  border: 0;
-}
-.upload #export-uploader .ui-fileupload-content {
-  padding: 4px;
-  border: 0;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files {
-  display: block;
-  border-collapse: unset;
-  margin: auto;
-  border-spacing: unset;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files > div {
-  display: block;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row {
-  display: flex;
-  flex-wrap: wrap;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row > div {
-  padding: 4px;
-  display: inline-block;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row .ui-fileupload-preview {
-  display: none;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(2) {
-  width: 75%;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(3) {
-  width: 25%;
-  text-align: right;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) {
-  flex-grow: 1;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(4) .ui-progressbar {
-  width: 100%;
-  height: 32px;
-  top: 0;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-fileupload-row div:nth-child(5) .ui-button {
-  width: 32px;
-  height: 32px;
-}
-.upload #export-uploader .ui-fileupload-content .ui-fileupload-files .ui-progressbar-value {
-  background: #ffa552;
-}
-.upload #export-uploader .ui-fileupload-choose,
-.upload #export-uploader .ui-fileupload-upload,
-.upload #export-uploader .ui-fileupload-cancel {
-  background: #00aff0;
-  border: 0;
-  transition: background ease-in 0.1s;
-}
-.upload #export-uploader .ui-fileupload-choose:hover,
-.upload #export-uploader .ui-fileupload-upload:hover,
-.upload #export-uploader .ui-fileupload-cancel:hover {
-  background: #0078a3;
-}
-.upload #export-uploader .ui-fileupload-choose .ui-button-icon-left {
-  display: none;
-}
-.upload #export-uploader .ui-fileupload-choose .ui-button-text {
-  padding: 0.5rem 1rem;
-}
-
-/* Conversation details */
-.conversations-container {
-  padding: 0;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
-  padding: 0;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation {
-  display: flex;
-  align-items: start;
-  padding: 4px;
-  border: 1px solid #dee2e6;
-  margin-bottom: 4px;
-  cursor: pointer;
-  background-color: white;
-  color: #00aff0;
-  transition: background-color 0.1s ease-in;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation:hover {
-  background-color: #ebfaff;
-  text-decoration: none;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation.highlighted {
-  background-color: #c2efff;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .icon {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  background-color: #9acd32;
-  flex-shrink: 0;
-  position: relative;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .icon span {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 1.5em;
-  color: white;
-  font-family: "Ubuntu Mono", sans-serif;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .detail {
-  flex-grow: 1;
-  white-space: nowrap;
-  overflow-x: hidden;
-  margin-left: 0.5em;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .name {
-  font-weight: bold;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .messages-count {
-  color: #8994a9;
-}
-.conversations-container .conversation-scroller.ui-datascroller .conversation .detail .date {
-  color: #8994a9;
-  float: right;
-  display: inline-block;
-}
-
 .messages-scroller.ui-datascroller .ui-datascroller-content,
 .conversation-scroller.ui-datascroller .ui-datascroller-content {
   -ms-overflow-style: none;
@@ -293,6 +259,207 @@ body .ui-card .ui-card-content {
 .chat .messages-wrapper .ui-datascroller-item .message.my .date {
   left: unset;
   right: calc(100% + 1em);
+}
+
+.panel-details .ui-card-content .p-grid {
+  margin-bottom: -0.5rem;
+}
+.panel-details .ui-card-content .detail-title {
+  font-weight: bold;
+}
+
+.panel-chats .ui-card-content .p-grid {
+  margin-bottom: -0.5rem;
+}
+.panel-chats .ui-card-content .conversations-container {
+  padding: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .ui-datascroller-content {
+  padding: 0;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation {
+  display: flex;
+  align-items: start;
+  padding: 4px;
+  border: 1px solid #dee2e6;
+  margin-bottom: 4px;
+  cursor: pointer;
+  background-color: white;
+  color: #00aff0;
+  transition: background-color 0.1s ease-in;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation:hover {
+  background-color: #ebfaff;
+  text-decoration: none;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation.highlighted {
+  background-color: #c2efff;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #9acd32;
+  flex-shrink: 0;
+  position: relative;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .icon span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: white;
+  font-family: "Ubuntu Mono", sans-serif;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .detail {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow-x: hidden;
+  margin-left: 0.5em;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .detail .name {
+  font-weight: bold;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .detail .messages-count {
+  color: #8994a9;
+}
+.panel-chats .ui-card-content .conversations-container .conversation-scroller.ui-datascroller .conversation .detail .date {
+  color: #8994a9;
+  float: right;
+}
+
+.panel-chat .header {
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 0.5rem;
+  background-color: #ffffff;
+}
+.panel-chat .header .chat-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.panel-chat .header .filter {
+  display: flex;
+  align-items: flex-end;
+}
+.panel-chat .header .filter > div:not(:last-child) {
+  margin-right: 0.5em;
+}
+.panel-chat .header .filter .label {
+  vertical-align: bottom;
+}
+.panel-chat .messages-wrapper {
+  background-color: #ffffff;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  overflow: hidden;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .message {
+  max-width: 600px;
+  background-color: #ebfaff;
+  padding: 0.25em 0.5em;
+  cursor: pointer;
+  border-radius: 0 8px 8px 0;
+  word-break: break-word;
+  transition: background-color 0.1s ease-in;
+  margin-bottom: 0.25em;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .date {
+  font-size: 0.75em;
+  color: #8994a9;
+  font-family: Ruda, sans-serif;
+  display: none;
+  margin: 0 0.5em;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .bookmark-icon {
+  display: none;
+  margin: 0 0.5em;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .bookmark-icon .ui-button {
+  color: #8994a9;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .bookmark-icon .ui-button.ui-state-hover {
+  color: #ffa552;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .message {
+  background-color: #d8f3fd;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .date {
+  display: block;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .bookmark-icon {
+  display: block;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my {
+  flex-direction: row-reverse;
+  justify-content: end;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my .message {
+  background-color: #c2efff;
+  border-radius: 8px 0 0 8px;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my:hover .message {
+  background-color: #aae1f4;
+}
+
+.panel-bookmarks .panel-bookmarks-panel #dropdownColor #dropdownColor_label {
+  color: transparent;
+}
+.panel-bookmarks .bookmark-colors-list {
+  display: flex;
+  align-items: end;
+  height: calc(37px + 1em);
+}
+.panel-bookmarks .bookmark-color {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  margin: 0 3px;
+  transition: all 0.1s ease-in;
+}
+.panel-bookmarks .bookmark-color:hover {
+  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+}
+.panel-bookmarks .bookmark-color.selected {
+  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+  width: 37px;
+  height: 37px;
+}
+.panel-bookmarks .bookmark-list-item {
+  padding: 0.5em;
+}
+.panel-bookmarks .bookmark-list-item .bookmark-color {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.panel-bookmarks .bookmark-list-item .bookmark-content {
+  flex-grow: 1;
+}
+.panel-bookmarks .bookmark-list-item .bookmark-content .bookmark-date {
+  flex-grow: 1;
+  color: #8994a9;
+  text-align: right;
+}
+
+#dropdownColor_panel.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item {
+  padding: 0;
+}
+#dropdownColor_panel.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row > td {
+  padding: 0;
 }
 
 /* Colors */
@@ -428,4 +595,16 @@ ss[type=smile]:after {
 }
 ss[type=fingerscrossed]:after {
   background-image: url("../resources/emoticons/fingerscrossed_40x40.gif");
+}
+ss[type=rain]:after {
+  background-image: url("../resources/emoticons/rain_40x40.gif");
+}
+ss[type=loudlycrying]:after {
+  background-image: url("../resources/emoticons/loudlycrying_40x40.gif");
+}
+ss[type=ttm]:after {
+  background-image: url("../resources/emoticons/ttm_40x40.gif");
+}
+ss[type=wasntme]:after {
+  background-image: url("../resources/emoticons/wasntme_40x40.gif");
 }

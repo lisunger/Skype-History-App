@@ -171,5 +171,21 @@ ss {
 	&[type=fingerscrossed]:after {
 		background-image: url('../resources/emoticons/fingerscrossed_40x40.gif') ;
 	}
+	
+	&[type=rain]:after {
+		background-image: url('../resources/emoticons/rain_40x40.gif') ;
+	}
+	
+	&[type=loudlycrying]:after {
+		background-image: url('../resources/emoticons/loudlycrying_40x40.gif') ;
+	}
+	
+	&[type=ttm]:after {
+		background-image: url('../resources/emoticons/ttm_40x40.gif') ;
+	}
+	
+	&[type=wasntme]:after {
+		background-image: url('../resources/emoticons/wasntme_40x40.gif') ;
+	}
 
 }

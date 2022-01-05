@@ -3,7 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
-  <persistence-unit name="lisko">
+  <persistence-unit name="lisko" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
     <class>com.lisko.SkypeReaderApp.database.object.ExportVersion</class>
@@ -11,6 +11,7 @@
     <class>com.lisko.SkypeReaderApp.database.object.Message</class>
     <class>com.lisko.SkypeReaderApp.database.object.ConversationDetails</class>
     <class>com.lisko.SkypeReaderApp.database.object.SkypeFile</class>
+    <class>com.lisko.SkypeReaderApp.database.object.Bookmark</class>
 
     <properties>
       <property name="db.vendor.name" value="postgresql" />

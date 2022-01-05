@@ -1,0 +1,129 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+	<div jsf:id="panel-bookmarks" class="panel-bookmarks">
+	
+		<div jsf:id="panel-bookmarks-panel" class="panel-bookmarks-panel" jsf:rendered="#{reader.showBookmarks}">
+			<p:card class="p-shadow-4">
+				<h1>Отметки</h1>
+				
+				<div class="p-grid">
+	                
+	                <div class="p-col-12">
+	                	<div class="p-grid ui-fluid p-align-end">
+	                		
+	                		<div class="p-col-2">
+	                			<p:selectOneMenu id="dropdownColor" value="#{bookmark.color}" effect="fade" var="color">
+				                    <f:selectItems value="#{reader.bookmarkColors}" itemValue="#{c.rgb}" itemLabel="#{c}" var="c" />
+				                    <p:column>
+				                        <div style="width: 40px; height: 40px; background-color: #{color};"/>
+				                    </p:column>
+				                    <p:ajax event="change" update="dropdownColor commandChangeColor" partialSubmit="true" process="@this" oncomplete="commandChangeColor()" />
+				                </p:selectOneMenu>
+				                <p:remoteCommand id="commandChangeColor" name="commandChangeColor" oncomplete="changeColor('#{bookmark.color}')"/>
+	                		</div>
+	                		
+	                		<div class="p-col-3">
+	                			<div class="label">Чат</div>
+	                			<p:selectOneMenu value="#{bookmark.chatId}" dynamic="true">
+	                				<f:selectItem itemLabel="" itemValue="#{null}"/>
+                    				<f:selectItems value="#{reader.conversations}" var="conv" itemLabel="#{conv.displayName}" itemValue="#{conv.id}"/>
+	                			</p:selectOneMenu>
+	                		</div>
+	                		
+	                		<div class="p-col-3">
+	                			<div class="label">Категория</div>
+	                			<p:selectOneMenu value="#{bookmark.category}" dynamic="true">
+	                				<f:selectItem itemLabel="" itemValue="#{null}"/>
+                    				<f:selectItems value="#{reader.bookmarkCategories}" />
+	                			</p:selectOneMenu>
+	                		</div>
+	                		
+	                		<div class="p-col-4">
+	                			<div class="label">Заглавие</div>
+	                			<p:inputText value="#{bookmark.title}" />
+	                		</div>
+	                	
+	                	</div>
+	                </div>
+	                
+	                <div class="p-col-12">
+	                	<p:commandButton icon="fas fa-paw" actionListener="#{bookmark.searchBookmarks()}" update="bookmarks-list-wrapper" />
+	                </div>
+	                
+	                <div jsf:id="bookmarks-list-wrapper" class="p-col-12">
+	                	<p:dataView value="#{bookmark.bookmarks}" var="b" layout="list" rendered="#{bookmark.bookmarks ne null}"
+	                		gridIcon="fas fa-border-all" listIcon="fas fa-stream" paginator="true" paginatorPosition="bottom" 
+	                		paginatorAlwaysVisible="false">
+	                		
+	                		<p:dataViewGridItem>#{b}</p:dataViewGridItem>
+	                		
+	                		<p:dataViewListItem>
+	                			<div class="bookmark-list-item">
+	                				<div class="p-d-flex">
+	                					<div class="bookmark-color" style="background-color: #{b.color}" />
+	                					
+	                					<div class="bookmark-content">
+	                						
+	                						<div class="bookmark-header p-d-flex">
+	                							<div class="bookmark-conversation">#{b.pk.conversationId}</div>
+			                					<div class="bookmark-category">#{b.category}</div>
+			                					<div class="bookmark-title">#{b.title}</div>
+			                					<div class="bookmark-date">
+			                						<h:outputText value="#{b.messageDate}">
+							                            <f:convertDateTime pattern="dd.MM.yyyy, HH:mm:ss" timeZone="#{reader.timeZone}"/>
+							                        </h:outputText>
+			                					</div>
+	                						</div>
+	                						
+	                						<div class="bookmark-message">
+	                							/// message...
+	                						</div>
+	                						
+	                					</div>
+	                				</div>
+	                			</div>
+	                		</p:dataViewListItem>
+	                		
+	                	</p:dataView>
+	                </div>
+				</div>
+			</p:card>
+		</div>
+		
+		<p:dialog widgetVar="modalBookmark" width="450" showEffect="fade" modal="true" closable="true" 
+			draggable="false" maximizable="false" closeOnEscape="true">
+	       	<div jsf:id="modalBookmarkWrapper" class="p-grid">
+	       		<div class="p-col-12 ui-fluid">
+	       			<p:inputText placeholder="Заглавие" value="#{reader.newBookmark.title}"/>
+	       		</div>
+	       		
+	       		<div class="p-col-12 ui-fluid">
+	       			<p:selectOneMenu value="#{reader.newBookmark.category}" effect="fold" editable="true" placeholder="Категория">
+                    <f:selectItems value="#{reader.bookmarkCategories}"/>
+                </p:selectOneMenu>
+	       		</div>
+	       		
+	       		<div jsf:id="bookmark-colors-list" class="p-col-12 bookmark-colors-list">
+	       			<ui:repeat var="color" value="#{reader.bookmarkColors}">
+	       				<p:commandLink actionListener="#{reader.setNewBookmarkColor(color.rgb)}" update="bookmark-colors-list"
+	       				partialSubmit="true" process="bookmark-colors-list" oncomplete="changeSelectedBookmarkColor()">
+	       					<div jsf:id="bookmark-color-option" style="background-color: #{color.rgb}" 
+	       						class="bookmark-color color-#{color} #{reader.newBookmark.color eq color.rgb ? 'add-style' : ''}"/>
+	       				</p:commandLink>
+	       			</ui:repeat>
+	       		</div>
+	       		<div class="p-col-12 p-d-flex p-justify-end">
+	       			<p:commandButton value="Cancel" oncomplete="PF('modalBookmark').hide();" styleClass="ui-button-outlined" style="margin-right: 0.5em;"/>
+	       			<p:commandButton value="OK" actionListener="#{reader.actionSaveNewBookmark()}" oncomplete="PF('modalBookmark').hide();"/>
+	       		</div>
+	       	</div>
+		</p:dialog>
+	</div>
+       
+</ui:composition>

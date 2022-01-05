@@ -1,0 +1,81 @@
+.panel-chats {
+    .ui-card-content {
+        .p-grid {
+            margin-bottom: -0.5rem;
+        }
+
+        .conversations-container {
+            padding: 0;
+            border-radius: $roundness;
+            overflow: hidden;
+
+            .conversation-scroller.ui-datascroller {
+                .ui-datascroller-content {
+                    padding: 0;
+                }
+
+                .conversation {
+                    display: flex;
+                    align-items: start;
+                    padding: 4px;
+                    border: 1px solid $colorBorder;
+                    margin-bottom: 4px;
+                    cursor: pointer;
+                    background-color: white;
+                    color: $colorSkypeBlue;
+                    transition: background-color 0.1s ease-in;
+
+                    &:hover {
+                        background-color: $colorSkypeBlueLight;
+                        text-decoration: none;
+                    }
+
+                    &.highlighted {
+                        background-color: $colorSkypeBlueMid;
+                    }
+
+                    .icon {
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                        background-color: $colorSkypeGreen;
+                        flex-shrink: 0;
+                        position: relative;
+
+                        span {
+                            position: absolute;
+                            left: 50%;
+                            top: 50%;
+                            transform: translate(-50%, -50%);
+                            text-transform: uppercase;
+                            font-weight: bold;
+                            font-size: 1.5em;
+                            color: white;
+                            font-family: "Ubuntu Mono", sans-serif;
+                        }
+                    }
+
+                    .detail {
+                        flex-grow: 1;
+                        white-space: nowrap;
+                        overflow-x: hidden;
+                        margin-left: 0.5em;
+
+                        .name {
+                            font-weight: bold;
+                        }
+
+                        .messages-count {
+                            color: $colorFontLight;
+                        }
+
+                        .date {
+                            color: $colorFontLight;
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

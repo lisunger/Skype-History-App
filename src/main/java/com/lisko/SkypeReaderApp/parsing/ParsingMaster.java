@@ -3,6 +3,7 @@ package com.lisko.SkypeReaderApp.parsing;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
+import com.lisko.SkypeReaderApp.database.Jpa;
 import com.lisko.SkypeReaderApp.database.object.Conversation;
 import com.lisko.SkypeReaderApp.database.object.ExportVersion;
 import com.lisko.SkypeReaderApp.database.object.Message;
@@ -44,12 +45,20 @@ public class ParsingMaster {
     private int duplicateMessages;
     private int newFiles;
     private int duplicateFiles;
-    private boolean closed;
 
-    private EntityManager em;
-    private JsonFactory jsonFactory;
+    /*
+    * Тези променливи следят колко съобщения/файла сме прочели
+    * и през определен боряч зачистват persistence context.
+    */
+    private int memoryLeakCounterMessages = 0;
+    private int memoryLeakCounterFiles = 0;
+    private static final int MEMORY_LEAK_PERIOD_MESSAGES = 10000;
+    private static final int MEMORY_LEAK_PERIOD_FILES = 100;
 
-    public ParsingMaster(Path folderPath, EntityManager em) {
+    private final EntityManager em;
+    private final JsonFactory jsonFactory;
+
+    public ParsingMaster(Path folderPath) {
         this.folderPath = folderPath;
         this.depth =                0;
         this.messageCount =         0;
@@ -60,8 +69,7 @@ public class ParsingMaster {
         this.duplicateMessages =    0;
         this.newFiles =             0;
         this.duplicateFiles =       0;
-        this.em = em;
-        this.closed = false;
+        this.em = Jpa.getInstance().getEntityManager();
         this.jsonFactory = new JsonFactory();
     }
 
@@ -561,7 +569,14 @@ public class ParsingMaster {
         while(parser.currentToken() != JsonToken.END_ARRAY || depthInArrayMessages == this.depth);
 
         if(persist && this.em.getTransaction().isActive()) {
+            this.em.find(Conversation.class, conversationId);
             this.em.getTransaction().commit();
+        }
+
+        // като се натрупат 10000 съобщения, да трие кеша, за да не гръмне приложението
+        this.memoryLeakCounterMessages++;
+        if(this.memoryLeakCounterMessages % MEMORY_LEAK_PERIOD_MESSAGES == 0) {
+            this.em.clear();
         }
     }
 
@@ -669,6 +684,7 @@ public class ParsingMaster {
     }
 
     private void readMediaFile(Path filePath, boolean persist, boolean log, String id, String filename) throws IOException {
+        LOGGER.debug("Reading file " + filename);
         SkypeFile file = this.em.find(SkypeFile.class, id);
 
         if(file != null) {
@@ -701,12 +717,19 @@ public class ParsingMaster {
             }
         }
 
+        // като се натрупат 1000 файла, да трие кеша, за да не гръмне приложението
+        this.memoryLeakCounterFiles++;
+        if(this.memoryLeakCounterFiles % MEMORY_LEAK_PERIOD_FILES == 0) {
+            this.em.clear();
+        }
+
         if(log) {
             LOGGER.debug(file.toString());
         }
     }
 
     private void readJsonFile(Path filePath, boolean persist, boolean log, String id) throws IOException {
+
         String filenameFromJson = null;
         String mime = null;
         try (BufferedReader reader = Files.newBufferedReader(filePath, StandardCharsets.UTF_8)) {
@@ -752,23 +775,22 @@ public class ParsingMaster {
         }
 
         SkypeFile file = this.em.find(SkypeFile.class, id);
-        if(file != null) {
 
-            if(file.getMime() != null) {
+        if (file != null) {
+
+            if (file.getMime() != null) {
                 this.duplicateFiles++;
-            }
-            else {
+            } else {
                 file.setMime(mime);
 
-                if(persist) {
+                if (persist) {
                     this.em.getTransaction().begin();
                     this.em.persist(file);
                     this.em.getTransaction().commit();
                 }
             }
-        }
-        else {
-            if(persist) {
+        } else {
+            if (persist) {
                 file = new SkypeFile();
                 file.setId(id);
                 file.setMime(mime);
@@ -780,6 +802,12 @@ public class ParsingMaster {
                 this.em.getTransaction().commit();
             }
             this.newFiles++;
+        }
+
+        // като се натрупат 1000 файла, да трие кеша, за да не гръмне приложението
+        this.memoryLeakCounterFiles++;
+        if(this.memoryLeakCounterFiles % MEMORY_LEAK_PERIOD_FILES == 0) {
+            this.em.clear();
         }
 
         if(log) {

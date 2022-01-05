@@ -2,6 +2,7 @@ package com.lisko.SkypeReaderApp.database.object;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.ForeignKey;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ public class MessagePk implements Serializable {
 
     @Column(name = "id")
     private String id;
+
     @Column(name="conversation_id")
     private String conversationId;
 
@@ -25,7 +27,8 @@ public class MessagePk implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MessagePk messagePk = (MessagePk) o;
-        return id.equals(messagePk.id) && conversationId.equals(messagePk.conversationId);
+        return this.id.equals(messagePk.id) 
+        		&& this.conversationId.equals(messagePk.conversationId);
     }
 
     @Override

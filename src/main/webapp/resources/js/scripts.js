@@ -23,3 +23,14 @@ PrimeFaces.locales ['bg'] = {
 function clearEmoticonContent() {
     $(".messages-wrapper .message ss").html("");
 }
+
+function changeSelectedBookmarkColor() {
+	let colorSquareNew = $(".bookmark-colors-list").find(".bookmark-color.add-style");
+	let colorSquareOld = $(".bookmark-colors-list").find(".bookmark-color.selected");
+	$(colorSquareNew).addClass("selected").removeClass("add-style");
+	$(colorSquareOld).removeClass("selected");
+}
+
+function changeColor(color) {
+	$("#dropdownColor").css({'background-color': color})
+}

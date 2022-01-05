@@ -1,8 +1,8 @@
 package com.lisko.SkypeReaderApp.database.object;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity(name = "file")
 public class SkypeFile {
@@ -17,6 +17,8 @@ public class SkypeFile {
     @Column(name = "mime")
     private String mime;
 
+    @Lob @Basic(fetch = FetchType.LAZY)
+    @Type(type = "org.hibernate.type.BinaryType")
     @Column(name = "bytes")
     private byte[] bytes;
 

@@ -14,7 +14,9 @@ import java.util.Map;
 
 public class MessagesLazyDataModel extends LazyDataModel<Message> {
 
-    private String conversationId;
+	private static final long serialVersionUID = -8241557071490923525L;
+	
+	private String conversationId;
     private Date dateBegin;
 
     public MessagesLazyDataModel(String conversationId, Date dateBegin) {
@@ -32,8 +34,6 @@ public class MessagesLazyDataModel extends LazyDataModel<Message> {
     @Override
     public List<Message> load(int first, int pageSize, Map<String, SortMeta> sortBy, Map<String, FilterMeta> filterBy) {
 
-        System.out.println("LOAD: " + first + ", " + pageSize);
-
         String sql = "from message m where m.id.conversationId = :convId and originalArrivalTime >= :minDate order by m.originalArrivalTime";
         TypedQuery<Message> query = Jpa.getInstance().getEntityManager().createQuery(sql, Message.class);
         query.setParameter("convId", this.conversationId);
@@ -48,13 +48,11 @@ public class MessagesLazyDataModel extends LazyDataModel<Message> {
 
     @Override
     public String getRowKey(Message object) {
-        System.out.println("ROW KEY: " + object);
         return String.valueOf(object.getPk());
     }
 
     @Override
     public Message getRowData(String rowKey) {
-        System.out.println("ROW DATA: " + rowKey);
 
         String sql = "from message m where m.id = :id";
         TypedQuery<Message> query = Jpa.getInstance().getEntityManager().createQuery(sql, Message.class);

@@ -35,6 +35,9 @@ public class Message {
 
     @Column(name = "ams_references")
     private String amsReferences;
+    
+    @Column(name = "bookmarked")
+    private Boolean bookmarked;
 
     public Message() {
         super();
@@ -112,8 +115,16 @@ public class Message {
     public void setAmsReferences(String amsReferences) {
         this.amsReferences = amsReferences;
     }
+    
+    public Boolean getBookmarked() {
+		return bookmarked;
+	}
 
-    @Override
+	public void setBookmarked(Boolean bookmarked) {
+		this.bookmarked = bookmarked;
+	}
+
+	@Override
     public String toString() {
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String dateString = null;

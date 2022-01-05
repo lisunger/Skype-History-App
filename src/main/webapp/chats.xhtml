@@ -6,7 +6,7 @@
         xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui">
 
-    <div jsf:id="panel-chats" class="chats">
+    <div jsf:id="panel-chats" class="panel-chats">
         <p:card class="p-shadow-4" rendered="#{reader.statistics.get('convCount') > 0}">
             <div class="p-grid">
                 <div class="p-col-12 conversations-container">
@@ -14,8 +14,8 @@
                     <p:dataScroller id="chatsScroller" value="#{reader.conversations}" var="conv" rowIndexVar="index"
                                     styleClass="conversation-scroller" mode="inline" scrollHeight="500">
 
-                        <p:commandLink styleClass="conversation p-shadow-1 #{reader.selectedChatIndex == index ? 'highlighted' : ''}"
-                                       actionListener="#{reader.actionChooseChat(index)}" update="chatsScroller chat">
+                        <p:commandLink id="chat-list" styleClass="conversation p-shadow-1 #{reader.selectedChatIndex == index ? 'highlighted' : ''}"
+                                       actionListener="#{reader.actionChooseChat(index)}" update="chatsScroller panel-chat">
                             <div class="icon">
                                 <span>#{conv.displayName.charAt(0)}</span>
                             </div>
@@ -34,6 +34,7 @@
                         </p:commandLink>
 
                     </p:dataScroller>
+
                 </div>
             </div>
         </p:card>

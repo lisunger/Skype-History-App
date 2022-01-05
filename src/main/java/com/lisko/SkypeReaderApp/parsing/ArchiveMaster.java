@@ -29,9 +29,7 @@ import java.util.Comparator;
  */
 public class ArchiveMaster {
 
-    public static final String TEMP_FOLDER_STRING =       "C:/lisko/temp/";
-    private static final String MESSAGES_FILE_NAME =    "messages.json";
-    private static final String MEDIA_FOLDER_NAME =     "media";
+    public static final String TEMP_FOLDER_STRING = "C:/lisko/temp/";
     private static final Path tempFolderPath = Paths.get(TEMP_FOLDER_STRING);
 
     private final UploadedFile uploadedFile;
@@ -110,58 +108,12 @@ public class ArchiveMaster {
         Files.delete(this.archiveCopyFile.toPath());
     }
 
-    public void traverseFiles() throws IOException {
-        Path messagesFile = Files.list(tempFolderPath).filter(p ->
-                !Files.isDirectory(p) && p.getFileName().toString().equals(MESSAGES_FILE_NAME)
-        ).findFirst().orElse(null);
-
-        if(messagesFile == null) {
-            System.out.println("No messages file found!");
-        }
-        else {
-            // TODO parse messages
-            System.out.println("... parsing messages... done");
-        }
-
-        Path mediaFolder = Files.list(tempFolderPath).filter(p ->
-                Files.isDirectory(p) && p.getFileName().toString().equals(MEDIA_FOLDER_NAME)
-        ).findFirst().orElse(null);
-
-        if(mediaFolder == null) {
-            System.out.println("No media files found!");
-        }
-        else {
-            // TODO read media files
-            System.out.println("Found media folder");
-            Files.list(mediaFolder).forEach(m -> {
-                //System.out.println("\t" + m.getFileName().toString() + "\t" + m.toFile());
-            });
-            System.out.println("Reading media files... done");
-        }
-    }
-
     public static void cleanupTempFolder() throws IOException {
         System.out.println("Cleaning up...");
-        Files.walk(Paths.get("C:/lisko"))
+        Files.walk(Paths.get(TEMP_FOLDER_STRING).getParent())
                 .sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
                 .forEach(File::delete);
-    }
-
-    public UploadedFile getUploadedFile() {
-        return uploadedFile;
-    }
-
-    public String getUploadedFileName() {
-        return uploadedFileName;
-    }
-
-    public File getArchiveCopyFile() {
-        return archiveCopyFile;
-    }
-
-    public void setArchiveCopyFile(File archiveCopyFile) {
-        this.archiveCopyFile = archiveCopyFile;
     }
 
     public static Path getTempFolderPath() {

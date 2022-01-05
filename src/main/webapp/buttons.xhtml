@@ -1,0 +1,35 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+        
+	<div class="panel-buttons">
+		
+		<div class="buttons-wrapper p-d-flex">
+	
+			<div>
+				<p:commandButton icon="fas fa-bookmark" styleClass="rounded-button ui-button-help" title="Отметки"
+					actionListener="#{reader.showBookmarks}" update="panel-chat panel-bookmarks" oncomplete="changeColor('#{bookmark.color}')" />
+			</div>
+			
+			<div>	
+		        <p:commandButton icon="fas fa-file-upload" styleClass="rounded-button ui-button-warning p-ml-2" title="Качване на нов експорт"
+					onclick="PF('modalUpload').show()" actionListener="#{reader.setDisplayUploadButton(false)}" update="upload-section"/>
+			</div>
+			
+			<div style="flex-grow: 1;"/>
+	
+			<div>
+				<p:commandButton widgetVar="buttonDestroyEverything" styleClass="rounded-button ui-button-danger p-ml-2"
+					actionListener="#{reader.deleteDatabase()}" update="page"
+					title="Изтриване на базата" icon="fas fa-skull-crossbones">
+		            <p:confirm message="Изтриване на базата?" icon="fas fa-exclamation-triangle" />
+		        </p:commandButton>
+	        </div>
+	        
+		</div>
+	</div>
+        
+</ui:composition>
