@@ -7,14 +7,15 @@
         xmlns:p="http://primefaces.org/ui">
 
     <div jsf:id="panel-chat" class="panel-chat">
-        <div class="p-shadow-4" jsf:rendered="#{reader.selectedChat != null}">
+        <div class="p-shadow-4" jsf:rendered="#{reader.currentScreen eq 'CHAT'}">
 
             <div class="header">
                 <div class="chat-title">#{reader.selectedChat.displayName}</div>
                 <div jsf:id="filter" class="filter">
                     <div>
                         <span class="label">Дата: </span>
-                        <p:datePicker value="#{reader.filterDateBegin}" mask="99.99.9999" pattern="dd.MM.yyyy" showIcon="true" locale="bg" />
+                        <p:datePicker value="#{reader.filterDateBegin}" mask="99.99.9999" 
+                        	pattern="dd.MM.yyyy" showIcon="true" locale="bg" inline="false" />
                     </div>
 
                     <div>
@@ -22,24 +23,13 @@
                              update="messages-wrapper" oncomplete="clearEmoticonContent()" styleClass="ui-button-warning"/>
                     </div>
                     
-                    <div style="flex-grow: 1; text-align: end;">
-                    	<p:commandButton icon="fas fa-bookmark" title="Отметки" actionListener="#{reader.showBookmarks}"
-                             update="messages-wrapper"/>
-                    </div>
-                    
-                    <div>
-                    	<p:commandButton icon="fas fa-skull-crossbones" action="#{reader.deleteChat}" title="Изтриване" 
-                    		update="panel-chats panel-details panel-chat" styleClass="ui-button-danger">
-                                <p:confirm message="Изтриване на чата?" icon="fas fa-exclamation-triangle" />
-                        </p:commandButton>
-                    </div>
                 </div>
             </div>
 
 			<!-- PF("dataScrollerChat").getJQ().find(".ui-datascroller-content").animate({scrollTop: 1000}, 400) -->
             <div jsf:id="messages-wrapper" class="messages-wrapper">
-                <p:dataScroller value="#{reader.messageLazyModel}" widgetVar="dataScrollerChat" rendered="#{reader.showChat}"
-                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller">
+                <p:dataScroller value="#{reader.messageLazyModel}" widgetVar="dataScrollerChat" rendered="#{reader.messageLazyModel ne null}"
+                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller" >
 
                     <p:ajax event="load" oncomplete="clearEmoticonContent()" />
 
@@ -47,6 +37,7 @@
 						<div id="#{mess.pk.id}" class="message">
 	                        <div class="content">
 	                            <h:outputText value="#{mess.content}" escape="false"/>
+	                            <div>#{mess.pk.id}</div>
 	                        </div>
 	                    </div>
 						<div class="date">
@@ -55,13 +46,15 @@
                             </h:outputText>
                         </div>
                         <div class="bookmark-icon">
-                        	<p:commandButton icon="#{mess.bookmarked ? 'fas' : 'far'} fa-bookmark" styleClass="rounded-button ui-button-flat" 
-                        		actionListener="#{reader.initNewBookmark(mess)}" oncomplete="changeSelectedBookmarkColor(); PF('modalBookmark').show()"
-                        		update="modalBookmarkWrapper"/>
+                        	<p:commandButton icon="#{mess.bookmarked ? 'fas' : 'far'} fa-bookmark" styleClass="rounded-button ui-button-flat"
+                        		onclick="console.log('click'); initNewBookmark([{name: 'messageId', value: '#{mess.pk.id}'}]);" 
+                        		oncomplete="console.log('complete'); changeSelectedBookmarkColor(); PF('modalBookmark').show();"
+                        		value="#{mess.pk.id}" />
                         </div>
                     </div>
 
                 </p:dataScroller>
+                <p:remoteCommand name="initNewBookmark" action="#{reader.initNewBookmark}" update="modalBookmarkWrapper"/>
             </div>
             
         </div>

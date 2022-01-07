@@ -65,8 +65,13 @@ public class DatabaseDao {
 
     public void deleteConversation(String conversationId) throws DatabaseErrorException {
         try {
-            String sql = "delete from message where id.conversationId = :id";
+        	
+        	String sql = "delete from bookmark where pk.conversationId = :id";
             getEntityManager().createQuery(sql).setParameter("id", conversationId).executeUpdate();
+            
+            sql = "delete from message where id.conversationId = :id";
+            getEntityManager().createQuery(sql).setParameter("id", conversationId).executeUpdate();
+            
             Conversation c = getEntityManager().find(Conversation.class, conversationId);
             getEntityManager().remove(c);
         }
@@ -78,7 +83,7 @@ public class DatabaseDao {
     public List<String> getBookmarkCategories() throws DatabaseErrorException {
     	try {
     		String sql = "select distinct category from bookmark order";
-            List<String> resultList = getEntityManager().createQuery(sql).getResultList();
+            List<String> resultList = getEntityManager().createQuery(sql, String.class).getResultList();
             resultList.remove(null);
             return resultList;
     	}
@@ -87,12 +92,12 @@ public class DatabaseDao {
         }
     }
     
-    public List<Bookmark> searchBookmarks(String color, String conversationId, String category, String title) throws DatabaseErrorException {
+    public List<BookmarkSearch> searchBookmarks(String color, String conversationId, String category, String title) throws DatabaseErrorException {
     	try {
-    		String select = "select b, c.displayName, m.content " +
+    		String select = "select new com.lisko.SkypeReaderApp.database.object.BookmarkSearch (b, c.displayName, m.content) " +
     						"from bookmark b " + 
     						"join conversation c on b.pk.conversationId = c.id " +
-							"join message m on b.pk.messageId = m.pk.id ";
+							"join message m on b.pk.messageId = m.pk.id and b.pk.conversationId = m.pk.conversationId ";
     		
     		String where = "";
     		
@@ -107,7 +112,7 @@ public class DatabaseDao {
     			else {
     				where += " where ";
     			}
-    			where += "pk.conversationId = '" + conversationId + "'";
+    			where += "b.pk.conversationId = '" + conversationId + "'";
     		}
     		
     		if(category != null) {
@@ -130,11 +135,26 @@ public class DatabaseDao {
     			where += "UPPER(title) like UPPER('%" + title + "%')" ;
     		}
     		
-    		String sql = select + where;
+    		String orderBy = " order by b.messageDate asc";
+    		
+    		String sql = select + where + orderBy;
     		
             List<BookmarkSearch> resultList = getEntityManager().createQuery(sql, BookmarkSearch.class).getResultList();
             
-            return null;
+            return resultList;
+    	}
+    	catch (Exception e) {
+            throw new DatabaseErrorException(e);
+        }
+    }
+    
+    public void deleteBookmark(Bookmark bookmark) throws DatabaseErrorException {
+    	try {
+    		if(!Jpa.getInstance().isAttached(bookmark)) {
+    			bookmark = Jpa.getInstance().getEntityManager().find(Bookmark.class, bookmark.getPk());
+    		}
+    		
+    		Jpa.getInstance().getEntityManager().remove(bookmark);
     	}
     	catch (Exception e) {
             throw new DatabaseErrorException(e);

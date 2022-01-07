@@ -12,6 +12,7 @@ local.properties
 .loadpath
 .project
 .classpath
+.tern-project
 
 target/
 

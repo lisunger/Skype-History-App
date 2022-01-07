@@ -136,6 +136,14 @@ body .ui-selectonemenu .ui-selectonemenu-label {
 body .ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item {
   padding: 0.25rem 0.5rem;
 }
+body .ui-selectonebutton > .ui-button.ui-state-active {
+  background: #00aff0;
+  border-color: #00aff0;
+}
+body .ui-selectonebutton > .ui-button.ui-state-active:not(.ui-state-disabled):hover {
+  background: #0078a3;
+  border-color: #0078a3;
+}
 
 html {
   height: 100%;
@@ -417,40 +425,118 @@ input::placeholder {
 .panel-bookmarks .panel-bookmarks-panel #dropdownColor #dropdownColor_label {
   color: transparent;
 }
-.panel-bookmarks .bookmark-colors-list {
+.panel-bookmarks .panel-bookmarks-panel .bookmarks-header h1 {
+  flex-grow: 1;
+}
+.panel-bookmarks .panel-bookmarks-panel .bookmarks-header .close-icon .ui-button {
+  color: #8994a9;
+}
+.panel-bookmarks .ui-dialog .bookmark-colors-list {
   display: flex;
   align-items: end;
   height: calc(37px + 1em);
 }
-.panel-bookmarks .bookmark-color {
+.panel-bookmarks .ui-dialog .bookmark-color {
   width: 30px;
   height: 30px;
   border-radius: 4px;
   margin: 0 3px;
   transition: all 0.1s ease-in;
 }
-.panel-bookmarks .bookmark-color:hover {
+.panel-bookmarks .ui-dialog .bookmark-color:hover {
   box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
 }
-.panel-bookmarks .bookmark-color.selected {
+.panel-bookmarks .ui-dialog .bookmark-color.selected {
   box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
   width: 37px;
   height: 37px;
 }
-.panel-bookmarks .bookmark-list-item {
+.panel-bookmarks .bookmarks-list-wrapper .ui-dataview .ui-dataview-header {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item {
+  padding: 0.5em;
+  border: 1px solid #dee2e6;
+  margin-bottom: 0.5em;
+  transition: all 0.1s ease-in;
+  border-radius: 4px;
+  cursor: pointer;
+  overflow: hidden;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item:hover {
+  background-color: #ebfaff;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-left {
+  margin-right: 1em;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-center {
+  flex-grow: 1;
+  margin-right: 0.5em;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-center .bookmark-header {
+  flex-grow: 1;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-center .bookmark-conversation {
+  font-size: 1.25em;
+  font-weight: bold;
+  width: 100%;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-center .bookmark-category {
+  margin-right: 1em;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-list-item .bookmark-right {
+  width: 140px;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item {
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+  height: 100%;
+  overflow: hidden;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item:hover {
+  background-color: #ebfaff;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item > div {
   padding: 0.5em;
 }
-.panel-bookmarks .bookmark-list-item .bookmark-color {
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item .bookmark-header {
+  background-color: #00aff0;
+  color: #ffffff;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item .bookmark-content {
+  flex-grow: 1;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item .bookmark-color {
+  margin-right: 0.5em;
+  flex-shrink: 0;
+  border: 1px solid #dee2e6;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item .bookmark-conversation {
+  font-size: 1.1em;
+  font-weight: bold;
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-grid-item .bookmark-category {
+  font-weight: bold;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-color {
   width: 30px;
   height: 30px;
   border-radius: 4px;
-  box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.25);
 }
-.panel-bookmarks .bookmark-list-item .bookmark-content {
-  flex-grow: 1;
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-title {
+  font-weight: bold;
+  color: #00aff0;
 }
-.panel-bookmarks .bookmark-list-item .bookmark-content .bookmark-date {
-  flex-grow: 1;
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-message {
+  color: #8994a9;
+}
+.panel-bookmarks .bookmarks-list-wrapper .bookmark-date {
   color: #8994a9;
   text-align: right;
 }
@@ -482,129 +568,132 @@ ss:after {
   content: "";
   background-size: contain;
 }
-ss[type=lipssealed]:after {
-  background-image: url("../resources/emoticons/lipssealed_40x40.gif");
-}
-ss[type=sun]:after {
-  background-image: url("../resources/emoticons/sun_40x40.gif");
-}
-ss[type=shake]:after {
-  background-image: url("../resources/emoticons/shake_40x40.gif");
-}
-ss[type=laugh]:after {
-  background-image: url("../resources/emoticons/laugh_40x40.gif");
-}
-ss[type=sad]:after {
-  background-image: url("../resources/emoticons/sad_40x40.gif");
-}
-ss[type=think]:after {
-  background-image: url("../resources/emoticons/think_40x40.gif");
-}
-ss[type=worry]:after {
-  background-image: url("../resources/emoticons/worry_40x40.gif");
-}
-ss[type=surprised]:after {
-  background-image: url("../resources/emoticons/surprised_40x40.gif");
-}
-ss[type=mmm]:after {
-  background-image: url("../resources/emoticons/mmm_40x40.gif");
-}
-ss[type=devil]:after {
-  background-image: url("../resources/emoticons/devil_40x40.gif");
-}
-ss[type=speechless]:after {
-  background-image: url("../resources/emoticons/speechless_40x40.gif");
-}
-ss[type=wait]:after {
-  background-image: url("../resources/emoticons/wait_40x40.gif");
-}
-ss[type=wonder]:after {
-  background-image: url("../resources/emoticons/wonder_40x40.gif");
-}
-ss[type=envy]:after {
-  background-image: url("../resources/emoticons/envy_40x40.gif");
-}
-ss[type=nod]:after {
-  background-image: url("../resources/emoticons/nod_40x40.gif");
-}
-ss[type=happy]:after {
-  background-image: url("../resources/emoticons/happy_40x40.gif");
-}
-ss[type=cool]:after {
-  background-image: url("../resources/emoticons/cool_40x40.gif");
-}
-ss[type=giggle]:after {
-  background-image: url("../resources/emoticons/giggle_40x40.gif");
-}
-ss[type=rofl]:after {
-  background-image: url("../resources/emoticons/rofl_40x40.gif");
-}
-ss[type=puke]:after {
-  background-image: url("../resources/emoticons/puke_40x40.gif");
-}
-ss[type=dull]:after {
-  background-image: url("../resources/emoticons/dull_40x40.gif");
-}
-ss[type=whew]:after {
-  background-image: url("../resources/emoticons/whew_40x40.gif");
-}
-ss[type=music]:after {
-  background-image: url("../resources/emoticons/music_40x40.gif");
-}
-ss[type=hi]:after {
-  background-image: url("../resources/emoticons/hi_40x40.gif");
-}
-ss[type=yawn]:after {
-  background-image: url("../resources/emoticons/yawn_40x40.gif");
-}
-ss[type=doh]:after {
-  background-image: url("../resources/emoticons/doh_40x40.gif");
-}
-ss[type=smirk]:after {
-  background-image: url("../resources/emoticons/smirk_40x40.gif");
-}
-ss[type=sleepy]:after {
-  background-image: url("../resources/emoticons/sleepy_40x40.gif");
-}
-ss[type=cwl]:after {
-  background-image: url("../resources/emoticons/cryingwhilelaughing_anim.gif");
-}
-ss[type=nahi]:after {
-  background-image: url("../resources/emoticons/nahi_40x40.gif");
-}
-ss[type=donttalktome]:after {
-  background-image: url("../resources/emoticons/donttalktome_40x40.gif");
-}
-ss[type=hungover]:after {
-  background-image: url("../resources/emoticons/hungover_40x40.gif");
-}
-ss[type=veryconfused]:after {
-  background-image: url("../resources/emoticons/veryconfused_40x40.gif");
+ss[type=angry]:after {
+  background-image: url("../resources/emoticons/angry_40x40.gif");
 }
 ss[type=confused]:after {
   background-image: url("../resources/emoticons/confused_40x40.gif");
 }
+ss[type=cool]:after {
+  background-image: url("../resources/emoticons/cool_40x40.gif");
+}
+ss[type=cwl]:after {
+  background-image: url("../resources/emoticons/cryingwhilelaughing_anim.gif");
+}
+ss[type=devil]:after {
+  background-image: url("../resources/emoticons/devil_40x40.gif");
+}
+ss[type=doh]:after {
+  background-image: url("../resources/emoticons/doh_40x40.gif");
+}
+ss[type=donttalktome]:after {
+  background-image: url("../resources/emoticons/donttalktome_40x40.gif");
+}
 ss[type=dream]:after {
   background-image: url("../resources/emoticons/dream_40x40.gif");
 }
-ss[type=party]:after {
-  background-image: url("../resources/emoticons/party_40x40.gif");
+ss[type=dull]:after {
+  background-image: url("../resources/emoticons/dull_40x40.gif");
 }
-ss[type=smile]:after {
-  background-image: url("../resources/emoticons/smile_40x40.gif");
+ss[type=envy]:after {
+  background-image: url("../resources/emoticons/envy_40x40.gif");
 }
 ss[type=fingerscrossed]:after {
   background-image: url("../resources/emoticons/fingerscrossed_40x40.gif");
 }
-ss[type=rain]:after {
-  background-image: url("../resources/emoticons/rain_40x40.gif");
+ss[type=giggle]:after {
+  background-image: url("../resources/emoticons/giggle_40x40.gif");
+}
+ss[type=happy]:after {
+  background-image: url("../resources/emoticons/happy_40x40.gif");
+}
+ss[type=hi]:after {
+  background-image: url("../resources/emoticons/hi_40x40.gif");
+}
+ss[type=hungover]:after {
+  background-image: url("../resources/emoticons/hungover_40x40.gif");
+}
+ss[type=laugh]:after {
+  background-image: url("../resources/emoticons/laugh_40x40.gif");
+}
+ss[type=lipssealed]:after {
+  background-image: url("../resources/emoticons/lipssealed_40x40.gif");
 }
 ss[type=loudlycrying]:after {
   background-image: url("../resources/emoticons/loudlycrying_40x40.gif");
 }
+ss[type=mmm]:after {
+  background-image: url("../resources/emoticons/mmm_40x40.gif");
+}
+ss[type=music]:after {
+  background-image: url("../resources/emoticons/music_40x40.gif");
+}
+ss[type=nahi]:after {
+  background-image: url("../resources/emoticons/nahi_40x40.gif");
+}
+ss[type=nod]:after {
+  background-image: url("../resources/emoticons/nod_40x40.gif");
+}
+ss[type=party]:after {
+  background-image: url("../resources/emoticons/party_40x40.gif");
+}
+ss[type=puke]:after {
+  background-image: url("../resources/emoticons/puke_40x40.gif");
+}
+ss[type=rain]:after {
+  background-image: url("../resources/emoticons/rain_40x40.gif");
+}
+ss[type=rofl]:after {
+  background-image: url("../resources/emoticons/rofl_40x40.gif");
+}
+ss[type=shake]:after {
+  background-image: url("../resources/emoticons/shake_40x40.gif");
+}
+ss[type=sad]:after {
+  background-image: url("../resources/emoticons/sad_40x40.gif");
+}
+ss[type=sleepy]:after {
+  background-image: url("../resources/emoticons/sleepy_40x40.gif");
+}
+ss[type=smile]:after {
+  background-image: url("../resources/emoticons/smile_40x40.gif");
+}
+ss[type=smirk]:after {
+  background-image: url("../resources/emoticons/smirk_40x40.gif");
+}
+ss[type=speechless]:after {
+  background-image: url("../resources/emoticons/speechless_40x40.gif");
+}
+ss[type=sun]:after {
+  background-image: url("../resources/emoticons/sun_40x40.gif");
+}
+ss[type=surprised]:after {
+  background-image: url("../resources/emoticons/surprised_40x40.gif");
+}
+ss[type=think]:after {
+  background-image: url("../resources/emoticons/think_40x40.gif");
+}
 ss[type=ttm]:after {
   background-image: url("../resources/emoticons/ttm_40x40.gif");
 }
+ss[type=veryconfused]:after {
+  background-image: url("../resources/emoticons/veryconfused_40x40.gif");
+}
+ss[type=wait]:after {
+  background-image: url("../resources/emoticons/wait_40x40.gif");
+}
 ss[type=wasntme]:after {
   background-image: url("../resources/emoticons/wasntme_40x40.gif");
+}
+ss[type=whew]:after {
+  background-image: url("../resources/emoticons/whew_40x40.gif");
+}
+ss[type=wonder]:after {
+  background-image: url("../resources/emoticons/wonder_40x40.gif");
+}
+ss[type=worry]:after {
+  background-image: url("../resources/emoticons/worry_40x40.gif");
+}
+ss[type=yawn]:after {
+  background-image: url("../resources/emoticons/yawn_40x40.gif");
 }

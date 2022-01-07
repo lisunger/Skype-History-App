@@ -191,4 +191,14 @@ body {
 			}
 		}
 	}
+	
+	.ui-selectonebutton > .ui-button.ui-state-active {
+		background: $colorSkypeBlue;
+		border-color: $colorSkypeBlue;	
+		
+		&:not(.ui-state-disabled):hover {
+			background: $colorSkypeBlueDark;
+			border-color: $colorSkypeBlueDark;
+		}
+	}
 }

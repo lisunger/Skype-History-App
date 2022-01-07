@@ -9,9 +9,11 @@ import com.lisko.SkypeReaderApp.database.object.BookmarkPk;
 import com.lisko.SkypeReaderApp.database.object.Conversation;
 import com.lisko.SkypeReaderApp.database.object.ConversationDetails;
 import com.lisko.SkypeReaderApp.database.object.Message;
+import com.lisko.SkypeReaderApp.database.object.MessagePk;
 import com.lisko.SkypeReaderApp.parsing.ArchiveMaster;
 import com.lisko.SkypeReaderApp.parsing.ParsingMaster;
 import com.lisko.SkypeReaderApp.utils.BookmarksColors;
+import com.lisko.SkypeReaderApp.utils.Screens;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.LazyDataModel;
@@ -26,6 +28,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.io.Serializable;
+import java.time.ZoneId;
 import java.util.*;
 
 @Named("reader")
@@ -40,13 +43,13 @@ public class ReaderBean implements Serializable {
     private DatabaseDao dbDao;
     private Map<String, Object> statistics;
     private List<ConversationDetails> conversations;
+    
+    private Screens currentScreen;
 
     private int selectedChatIndex = -1;
     private Conversation selectedChat;
     private Date filterDateBegin;
     private LazyDataModel<Message> messageLazyModel;
-    private boolean showChat;
-    private boolean showBookmarks;
     private Bookmark newBookmark;
     private List<String> bookmarkCategories;
 
@@ -59,12 +62,13 @@ public class ReaderBean implements Serializable {
     @PostConstruct
     public void initData() {
         LOGGER.debug("ReaderBean initData()");
+        Jpa.getInstance().getEntityManager().clear();
         this.dbDao = new DatabaseDao();
         this.statistics = new HashMap<>();
         this.conversations = new ArrayList<>();
-        this.showChat = false;
+        this.currentScreen = Screens.EMPTY;
         
-        initNewBookmark(null);
+        this.newBookmark = new Bookmark();
         initBookMarkCategories();
 
         readStatistics();
@@ -150,12 +154,12 @@ public class ReaderBean implements Serializable {
     public void actionChooseChat(int index) {
         this.selectedChatIndex = index;
         this.selectedChat = Jpa.getInstance().getEntityManager().find(Conversation.class, this.conversations.get(index).getId());
-        this.showChat = false;
+        changeScreen(Screens.CHAT);
     }
 
     public void actionLoadMessages() {
         this.messageLazyModel = new MessagesLazyDataModel(this.selectedChat.getId(), this.filterDateBegin);
-        this.showChat = true;
+        // TODO show scroller
     }
 
     public void deleteDatabase() {
@@ -170,12 +174,13 @@ public class ReaderBean implements Serializable {
         readStatistics();
     }
 
-    public void deleteChat() {
-        EntityManager em = Jpa.getInstance().getEntityManager();
+    public void deleteChat(int index) {
+    	EntityManager em = Jpa.getInstance().getEntityManager();
         try {
             em.getTransaction().begin();
             DatabaseDao dao = new DatabaseDao();
             dao.deleteConversation(this.conversations.get(this.selectedChatIndex).getId());
+            // TODO da se triat i bookmarkovete!!
             em.getTransaction().commit();
             this.conversations.remove(this.selectedChatIndex);
             
@@ -189,16 +194,20 @@ public class ReaderBean implements Serializable {
         }
     }
     
-    public void initNewBookmark(Message m) {
+    public void initNewBookmark() {
+
     	this.newBookmark = new Bookmark();
     	this.newBookmark.setColor(BookmarksColors.YELLOW.getRgb());
     	
-    	if(m != null) {
+    	String messageId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("messageId");
+    	Message selectedMessage = Jpa.getInstance().getEntityManager().find(Message.class, new MessagePk(messageId, this.selectedChat.getId()));
+        
+    	if(selectedMessage != null) {
     		this.newBookmark.setPk(
         			new BookmarkPk(
-        					m.getPk().getId(),
-        					m.getPk().getConversationId()));
-    		this.newBookmark.setMessageDate(m.getOriginalArrivalTime());
+        					selectedMessage.getPk().getId(),
+        					selectedMessage.getPk().getConversationId()));
+    		this.newBookmark.setMessageDate(selectedMessage.getOriginalArrivalTime());
     	}
     }
     
@@ -217,6 +226,7 @@ public class ReaderBean implements Serializable {
     }
     
     public void actionSaveNewBookmark() {
+    	
     	EntityManager em = Jpa.getInstance().getEntityManager();
     	try {
     		if(this.newBookmark.getTitle().isEmpty()) {
@@ -231,19 +241,39 @@ public class ReaderBean implements Serializable {
 	        	this.bookmarkCategories.add(this.newBookmark.getCategory());
 	        }
 	        
+	        this.newBookmark = new Bookmark();
     	}
     	catch(Exception e) {
     		em.getTransaction().rollback();
-    		LOGGER.error(e.getStackTrace().toString());
+    		e.printStackTrace();
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Отметката не е записана!"));
     	}
     	
-    	initNewBookmark(null);
     }
     
-    public void showBookmarks() {
-    	this.showBookmarks = !this.showBookmarks;
-    	this.showChat = !this.showBookmarks;
+    public void changeScreen(Screens screen) {
+    	
+    	this.currentScreen = screen;
+    	
+    	switch(this.currentScreen) {
+	    	case EMPTY: {
+	    		break;
+	    	}
+	    	case CHAT: {
+	    		break;
+	    	}
+	    	case BOOKMARKS: {
+	    		BookmarksBean b = FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{bookmark}", BookmarksBean.class);
+	    		if(b != null) {
+	    			b.searchBookmarks();
+	    		}
+	    		break;
+	    	}
+	    	case STORIES: {
+	    		// TODO
+	    		break;
+	    	}
+    	}
     }
     
     
@@ -270,7 +300,15 @@ public class ReaderBean implements Serializable {
         this.conversations = conversations;
     }
 
-    public int getSelectedChatIndex() {
+    public Screens getCurrentScreen() {
+		return currentScreen;
+	}
+
+	public void setCurrentScreen(Screens currentScreen) {
+		this.currentScreen = currentScreen;
+	}
+
+	public int getSelectedChatIndex() {
         return selectedChatIndex;
     }
 
@@ -301,22 +339,6 @@ public class ReaderBean implements Serializable {
     public void setMessageLazyModel(LazyDataModel<Message> messageLazyModel) {
         this.messageLazyModel = messageLazyModel;
     }
-
-    public boolean isShowChat() {
-        return showChat;
-    }
-
-    public void setShowChat(boolean showChat) {
-        this.showChat = showChat;
-    }
-
-    public boolean isShowBookmarks() {
-		return showBookmarks;
-	}
-
-	public void setShowBookmarks(boolean showBookmarks) {
-		this.showBookmarks = showBookmarks;
-	}
 
 	public boolean isPersistMessages() {
         return persistMessages;

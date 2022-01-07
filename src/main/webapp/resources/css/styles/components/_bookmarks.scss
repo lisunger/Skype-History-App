@@ -6,53 +6,164 @@
 				color: transparent;
 			}
 		}
-	}
-	
-	.bookmark-colors-list {
-		display: flex;
-		align-items: end;
-		height: calc(37px + 1em);
-	}
-	
-	.bookmark-color {
-		width: 30px;
-		height: 30px;
-		border-radius: $roundness;
-		margin: 0 3px;
-		transition: all 0.1s ease-in;
 		
-		&:hover {
-			box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
-		}
-		
-		&.selected {
-			box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
-			width: 37px;
-			height: 37px;
+		.bookmarks-header {
+			h1 {
+				flex-grow: 1;
+			}
+			
+			.close-icon {
+				.ui-button {
+					color: $colorFontLight;
+				}
+			}
 		}
 	}
 	
-	.bookmark-list-item {
-		padding: 0.5em;
+	.ui-dialog {
+		.bookmark-colors-list {
+			display: flex;
+			align-items: end;
+			height: calc(37px + 1em);
+		}
 		
 		.bookmark-color {
 			width: 30px;
 			height: 30px;
 			border-radius: $roundness;
-			box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.25);
-		}
-		
-		.bookmark-content {
-			flex-grow: 1;
+			margin: 0 3px;
+			transition: all 0.1s ease-in;
 			
-			.bookmark-date {
-				flex-grow: 1;
-				color: $colorFontLight;
-				text-align: right;
+			&:hover {
+				box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+			}
+			
+			&.selected {
+				box-shadow: 1px 2px 4px 0px rgba(0, 0, 0, 0.5);
+				width: 37px;
+				height: 37px;
+			}
+		}
+	}
+	
+	.bookmarks-list-wrapper {
+		
+		.ui-dataview {
+			.ui-dataview-header {
+				padding-top: 0.25em;
+				padding-bottom: 0.25em;
 			}
 		}
 		
+		.bookmark-list-item {
+			padding: 0.5em;
+			border: 1px solid $colorBorder;
+	    	margin-bottom: 0.5em;
+			transition: all 0.1s ease-in;
+			border-radius: $roundness;
+			cursor: pointer;
+			overflow: hidden;
+			
+			&:hover {
+				background-color: $colorSkypeBlueLight;
+			}
+			
+			.bookmark-left {
+				margin-right: 1em;
+			}
+			
+			.bookmark-center {
+				flex-grow: 1;
+				margin-right: 0.5em;
+				
+				.bookmark-header {
+					flex-grow: 1;
+				}
+				
+				.bookmark-conversation {
+				    font-size: 1.25em;
+					font-weight: bold;	
+					width: 100%;
+				}
+				
+				.bookmark-category {
+					margin-right: 1em;
+				}
+				
+			}
+			
+			.bookmark-right {
+				width: 140px;
+			}
+		}
+		
+		.bookmark-grid-item {
+			border: 1px solid $colorBorder;
+			border-radius: $roundness;
+			cursor: pointer;
+			transition: all 0.1s ease-in;
+			height: 100%;
+			overflow: hidden;
+			
+			&:hover {
+				background-color: $colorSkypeBlueLight;
+			}
+			
+			&>div {
+				padding: 0.5em;
+			}
+			
+			.bookmark-header {
+				background-color: $colorSkypeBlue;
+				color: #ffffff;
+			}
+			
+			.bookmark-content {
+				flex-grow: 1;
+			}
+			
+			.bookmark-color {
+				margin-right: 0.5em;
+				flex-shrink: 0;
+				border: 1px solid $colorBorder;
+			}
+			
+			.bookmark-conversation {
+				font-size: 1.1em;
+				font-weight: bold;
+				flex-grow: 1;
+				overflow: hidden;
+    			white-space: nowrap;
+			}
+			
+			.bookmark-category {
+				font-weight: bold;
+			}
+			
+		}
+		
+		.bookmark-color {
+			width: 30px;
+			height: 30px;
+			border-radius: $roundness;
+		}
+		
+		.bookmark-title {
+			font-weight: bold;
+			color: $colorSkypeBlue;
+		}
+		
+		.bookmark-message {
+			color: $colorFontLight;
+		}
+		
+		
+		.bookmark-date {
+			color: $colorFontLight;
+			text-align: right;
+		}
 	}
+	
 }
 
 #dropdownColor_panel.ui-selectonemenu-panel {

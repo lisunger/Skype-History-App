@@ -2,9 +2,10 @@ package com.lisko.SkypeReaderApp.utils;
 
 public enum BookmarksColors {
 	
+	BLACK("#080618"),
 	RED("#d32f2f"),
 	ORANGE("#ff8f0f"),
-	YELLOW("#fbc02d"),
+	YELLOW("#ffcf00"),
 	GREEN("#9acd32"),
 	BLUE("#00aff0"),
 	PINK("#eb7bc0");

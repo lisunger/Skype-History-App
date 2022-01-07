@@ -3,12 +3,16 @@ package com.lisko.SkypeReaderApp.beans;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.lisko.SkypeReaderApp.database.DatabaseErrorException;
+import com.lisko.SkypeReaderApp.database.Jpa;
 import com.lisko.SkypeReaderApp.database.dao.DatabaseDao;
 import com.lisko.SkypeReaderApp.database.object.Bookmark;
+import com.lisko.SkypeReaderApp.database.object.BookmarkSearch;
 import com.lisko.SkypeReaderApp.utils.BookmarksColors;
 
 import java.io.Serializable;
@@ -25,16 +29,17 @@ public class BookmarksBean implements Serializable {
 	private String category;
 	private String title;
 	private String chatId;
-	private List<Bookmark> bookmarks;
+	private List<BookmarkSearch> bookmarks;
+	private DatabaseDao dao;
 	
 
 	@PostConstruct
     public void initData() {
-		this.color = BookmarksColors.YELLOW.getRgb();
+		//this.color = BookmarksColors.YELLOW.getRgb();
+		this.dao = new DatabaseDao();
     }
 	
 	public void searchBookmarks() {
-		DatabaseDao dao = new DatabaseDao();
 		
 		if(this.color != null && this.color.isEmpty()) this.color = null;
 		if(this.chatId != null && this.chatId.isEmpty()) this.chatId = null;
@@ -42,15 +47,26 @@ public class BookmarksBean implements Serializable {
 		if(this.title != null && this.title.isEmpty()) this.title = null;
 		
 		try {
-			this.bookmarks = dao.searchBookmarks(this.color, this.chatId, this.category, this.title);
+			this.bookmarks = this.dao.searchBookmarks(this.color, this.chatId, this.category, this.title);
 		} catch (DatabaseErrorException e) {
 			e.printStackTrace();
 		}
-		
-		int a = 1;
-		
 	}
 	
+	public void actionDeleteBookmark(BookmarkSearch bookmark) {
+		EntityManager em = Jpa.getInstance().getEntityManager();
+		
+		try {
+			em.getTransaction().begin();
+			this.dao.deleteBookmark(bookmark.getBookmark());
+			em.getTransaction().commit();
+			searchBookmarks();
+			
+		} catch (DatabaseErrorException e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}
+	}
 
 	public String getColor() {
 		return color;
@@ -84,11 +100,11 @@ public class BookmarksBean implements Serializable {
 		this.chatId = chatId;
 	}
 
-	public List<Bookmark> getBookmarks() {
+	public List<BookmarkSearch> getBookmarks() {
 		return bookmarks;
 	}
 
-	public void setBookmarks(List<Bookmark> bookmarks) {
+	public void setBookmarks(List<BookmarkSearch> bookmarks) {
 		this.bookmarks = bookmarks;
 	}
 	

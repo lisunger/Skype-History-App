@@ -11,7 +11,7 @@
 	
 			<div>
 				<p:commandButton icon="fas fa-bookmark" styleClass="rounded-button ui-button-help" title="Отметки"
-					actionListener="#{reader.showBookmarks}" update="panel-chat panel-bookmarks" oncomplete="changeColor('#{bookmark.color}')" />
+					actionListener="#{reader.changeScreen('BOOKMARKS')}" update="panel-chat panel-bookmarks" oncomplete="changeColor('#{bookmark.color}');commandChangeColor()" />
 			</div>
 			
 			<div>	

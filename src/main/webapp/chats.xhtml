@@ -15,7 +15,7 @@
                                     styleClass="conversation-scroller" mode="inline" scrollHeight="500">
 
                         <p:commandLink id="chat-list" styleClass="conversation p-shadow-1 #{reader.selectedChatIndex == index ? 'highlighted' : ''}"
-                                       actionListener="#{reader.actionChooseChat(index)}" update="chatsScroller panel-chat">
+                                       actionListener="#{reader.actionChooseChat(index)}" update="panel-chats panel-chat panel-bookmarks">
                             <div class="icon">
                                 <span>#{conv.displayName.charAt(0)}</span>
                             </div>
@@ -31,6 +31,13 @@
                                     </span>
                                 </div>
                             </div>
+                            
+                            <p:contextMenu for="chat-list">
+					            <p:menuitem value="Изтриване" action="#{reader.deleteChat(index)}" ajax="false" icon="fas fa-times"
+					            	update="panel-details panel-chats panel-chat panel-bookmarks">
+					            	<p:confirm message="Изтриване на чата?" icon="fas fa-exclamation-triangle" />
+					            </p:menuitem>
+					        </p:contextMenu>
                         </p:commandLink>
 
                     </p:dataScroller>
