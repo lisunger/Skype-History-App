@@ -48,6 +48,10 @@
 					word-break: break-word;
 					transition: background-color 0.1s ease-in;
 					margin-bottom: 0.25em;
+					
+					&.bookmarked {
+						background-color: $colorYellowLight;
+					}
 				}
 				
 				.date {
@@ -74,6 +78,10 @@
 				&:hover {
 					.message {
 						background-color: $colorSkypeBlueLight2;
+						
+						&.bookmarked {
+							background-color: $colorYellowLight2;
+						}
 					}
 					
 					.date {
@@ -92,11 +100,19 @@
 					.message {
 						background-color: $colorSkypeBlueMid;
 						border-radius: $messageRoundness 0 0 $messageRoundness;
+						
+						&.bookmarked {
+							background-color: $colorYellowMid;
+						}
 					}
 					
 					&:hover {
 						.message {
 							background-color: $colorSkypeBlueMid2;
+							
+							&.bookmarked {
+								background-color: $colorYellowMid2;
+							}
 						}
 					}
 				}

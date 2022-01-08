@@ -28,7 +28,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.io.Serializable;
-import java.time.ZoneId;
 import java.util.*;
 
 @Named("reader")
@@ -154,6 +153,7 @@ public class ReaderBean implements Serializable {
     public void actionChooseChat(int index) {
         this.selectedChatIndex = index;
         this.selectedChat = Jpa.getInstance().getEntityManager().find(Conversation.class, this.conversations.get(index).getId());
+        this.messageLazyModel = null;
         changeScreen(Screens.CHAT);
     }
 
@@ -180,7 +180,6 @@ public class ReaderBean implements Serializable {
             em.getTransaction().begin();
             DatabaseDao dao = new DatabaseDao();
             dao.deleteConversation(this.conversations.get(this.selectedChatIndex).getId());
-            // TODO da se triat i bookmarkovete!!
             em.getTransaction().commit();
             this.conversations.remove(this.selectedChatIndex);
             
@@ -233,9 +232,9 @@ public class ReaderBean implements Serializable {
     			this.newBookmark.setTitle(null);
     		}
     		
-	    	em.getTransaction().begin();
-	        em.persist(this.newBookmark);
-	        em.getTransaction().commit();
+    		em.getTransaction().begin();
+    		this.dbDao.saveBookmark(this.newBookmark);
+    		em.getTransaction().commit();
 	        
 	        if(this.newBookmark.getCategory() != null && !this.bookmarkCategories.contains(this.newBookmark.getCategory())) {
 	        	this.bookmarkCategories.add(this.newBookmark.getCategory());
@@ -248,29 +247,53 @@ public class ReaderBean implements Serializable {
     		e.printStackTrace();
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Грешка", "Отметката не е записана!"));
     	}
-    	
+    }
+    
+    public void removeBookmark(Message message) {
+		EntityManager em = Jpa.getInstance().getEntityManager();
+		try {
+			em.getTransaction().begin();
+			this.dbDao.deleteBookmark(message);
+			em.getTransaction().commit();
+			
+		} catch (DatabaseErrorException e) {
+			em.getTransaction().rollback();
+			e.printStackTrace();
+		}
     }
     
     public void changeScreen(Screens screen) {
     	
-    	this.currentScreen = screen;
-    	
-    	switch(this.currentScreen) {
-	    	case EMPTY: {
+    	switch(screen) {
+	    	
+    		case EMPTY: {
+	    		this.currentScreen = Screens.EMPTY;
 	    		break;
 	    	}
+	    	
 	    	case CHAT: {
+	    		this.currentScreen = Screens.CHAT;
 	    		break;
 	    	}
+	    	
 	    	case BOOKMARKS: {
+	    		if(this.currentScreen == Screens.BOOKMARKS) {
+	    			changeScreen(Screens.EMPTY);
+	    			break;
+	    		}
+	    			
+	    		this.currentScreen = Screens.BOOKMARKS;
 	    		BookmarksBean b = FacesContext.getCurrentInstance().getApplication().evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{bookmark}", BookmarksBean.class);
 	    		if(b != null) {
 	    			b.searchBookmarks();
 	    		}
+	    		
 	    		break;
 	    	}
+	    	
 	    	case STORIES: {
 	    		// TODO
+	    		this.currentScreen = Screens.STORIES;
 	    		break;
 	    	}
     	}

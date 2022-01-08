@@ -18,6 +18,12 @@ import com.lisko.SkypeReaderApp.utils.BookmarksColors;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * 
+ * @author n.kanev
+ *
+ * Bean на екрана с отметките (bookmarks). Извършва търсене, триене и отваряне на отбелязано съобщение.
+ */
 @Named("bookmark")
 @ViewScoped
 public class BookmarksBean implements Serializable {
@@ -35,7 +41,6 @@ public class BookmarksBean implements Serializable {
 
 	@PostConstruct
     public void initData() {
-		//this.color = BookmarksColors.YELLOW.getRgb();
 		this.dao = new DatabaseDao();
     }
 	

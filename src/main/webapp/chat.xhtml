@@ -28,28 +28,30 @@
 
 			<!-- PF("dataScrollerChat").getJQ().find(".ui-datascroller-content").animate({scrollTop: 1000}, 400) -->
             <div jsf:id="messages-wrapper" class="messages-wrapper">
-                <p:dataScroller value="#{reader.messageLazyModel}" widgetVar="dataScrollerChat" rendered="#{reader.messageLazyModel ne null}"
+                <p:dataScroller id="chat-scroller" value="#{reader.messageLazyModel}" widgetVar="dataScrollerChat" rendered="#{reader.messageLazyModel ne null}"
                     var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller" >
 
                     <p:ajax event="load" oncomplete="clearEmoticonContent()" />
-
-					<div class="chat-message-wrapper #{mess.displayName == null ? 'my' : ''}">
-						<div id="#{mess.pk.id}" class="message">
+					
+					<div jsf:id="messageLisko" class="chat-message-wrapper #{mess.displayName == null ? 'my' : ''}">
+						<div class="message #{mess.bookmarked ? 'bookmarked' : ''}">
 	                        <div class="content">
 	                            <h:outputText value="#{mess.content}" escape="false"/>
-	                            <div>#{mess.pk.id}</div>
 	                        </div>
 	                    </div>
+	                    <div class="bookmark-icon">
+                        	<p:commandButton rendered="#{!mess.bookmarked}" icon="far fa-bookmark" styleClass="rounded-button ui-button-flat"
+                        		onclick="console.log('click'); initNewBookmark([{name: 'messageId', value: '#{mess.pk.id}'}]);" 
+                        		oncomplete="console.log('complete'); changeSelectedBookmarkColor(); PF('modalBookmark').show();" />
+                        		
+                        	<p:commandButton rendered="#{mess.bookmarked}" icon="fas fa-bookmark" styleClass="rounded-button ui-button-flat"
+                        		actionListener="#{reader.removeBookmark(mess)}" update="messageLisko" />
+                        		<!-- chat-scroller:0:messageLisko -->
+                        </div>
 						<div class="date">
                             <h:outputText value="#{mess.originalArrivalTime}">
                                 <f:convertDateTime pattern="dd.MM.yyyy, HH:mm:ss" timeZone="#{reader.timeZone}"/>
                             </h:outputText>
-                        </div>
-                        <div class="bookmark-icon">
-                        	<p:commandButton icon="#{mess.bookmarked ? 'fas' : 'far'} fa-bookmark" styleClass="rounded-button ui-button-flat"
-                        		onclick="console.log('click'); initNewBookmark([{name: 'messageId', value: '#{mess.pk.id}'}]);" 
-                        		oncomplete="console.log('complete'); changeSelectedBookmarkColor(); PF('modalBookmark').show();"
-                        		value="#{mess.pk.id}" />
                         </div>
                     </div>
 

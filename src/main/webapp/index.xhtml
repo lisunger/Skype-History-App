@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
@@ -23,7 +24,7 @@
             <h:form id="page" prependId="false">
                 <div class="p-grid">
 
-                    <div class="p-col-4">
+                    <div jsf:id="page-section-left" class="p-col-4">
                         <div class="p-grid">
                             <div class="p-col-12">
                                 <ui:include src="details.xhtml"/>
@@ -43,9 +44,10 @@
                         </div>
                     </div>
 
-                    <div class="p-col-8">
+                    <div jsf:id="page-section-right" class="p-col-8">
                         <ui:include src="chat.xhtml" />
                         <ui:include src="bookmarks.xhtml" />
+                        <ui:include src="stories.xhtml" />
                     </div>
 
                 </div>

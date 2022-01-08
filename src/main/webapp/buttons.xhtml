@@ -11,11 +11,16 @@
 	
 			<div>
 				<p:commandButton icon="fas fa-bookmark" styleClass="rounded-button ui-button-help" title="Отметки"
-					actionListener="#{reader.changeScreen('BOOKMARKS')}" update="panel-chat panel-bookmarks" oncomplete="changeColor('#{bookmark.color}');commandChangeColor()" />
+					actionListener="#{reader.changeScreen('BOOKMARKS')}" update="page-section-right" oncomplete="changeColor('#{bookmark.color}');commandChangeColor()" />
+			</div>
+			
+			<div>
+				<p:commandButton icon="fas fa-crow" styleClass="rounded-button ui-button-help p-ml-2" title="Разкази"
+					actionListener="#{reader.changeScreen('STORIES')}" update="page-section-right" />
 			</div>
 			
 			<div>	
-		        <p:commandButton icon="fas fa-file-upload" styleClass="rounded-button ui-button-warning p-ml-2" title="Качване на нов експорт"
+		        <p:commandButton icon="fas fa-file-import" styleClass="rounded-button ui-button-warning p-ml-2" title="Качване на нов експорт"
 					onclick="PF('modalUpload').show()" actionListener="#{reader.setDisplayUploadButton(false)}" update="upload-section"/>
 			</div>
 			

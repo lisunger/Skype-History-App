@@ -3,9 +3,12 @@ package com.lisko.SkypeReaderApp.database.dao;
 import com.lisko.SkypeReaderApp.database.DatabaseErrorException;
 import com.lisko.SkypeReaderApp.database.Jpa;
 import com.lisko.SkypeReaderApp.database.object.Bookmark;
+import com.lisko.SkypeReaderApp.database.object.BookmarkPk;
 import com.lisko.SkypeReaderApp.database.object.BookmarkSearch;
 import com.lisko.SkypeReaderApp.database.object.Conversation;
 import com.lisko.SkypeReaderApp.database.object.ConversationDetails;
+import com.lisko.SkypeReaderApp.database.object.Message;
+import com.lisko.SkypeReaderApp.database.object.MessagePk;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -148,16 +151,34 @@ public class DatabaseDao {
         }
     }
     
+    public void saveBookmark(Bookmark bookmark) throws DatabaseErrorException {		
+		try {
+			Message originalMessage = getEntityManager().find(Message.class, new MessagePk(bookmark.getPk().getMessageId(), bookmark.getPk().getConversationId()));
+			originalMessage.setBookmarked(true);
+			
+			getEntityManager().merge(originalMessage);
+			getEntityManager().persist(bookmark);
+		}
+		catch (Exception e) {
+            throw new DatabaseErrorException(e);
+        }
+    }
+    
     public void deleteBookmark(Bookmark bookmark) throws DatabaseErrorException {
-    	try {
-    		if(!Jpa.getInstance().isAttached(bookmark)) {
-    			bookmark = Jpa.getInstance().getEntityManager().find(Bookmark.class, bookmark.getPk());
-    		}
-    		
-    		Jpa.getInstance().getEntityManager().remove(bookmark);
+    	try {    
+    		Message originalMessage = getEntityManager().find(Message.class, new MessagePk(bookmark.getPk().getMessageId(), bookmark.getPk().getConversationId()));
+			originalMessage.setBookmarked(false);
+			
+			getEntityManager().merge(originalMessage);
+    		getEntityManager().remove(bookmark);
     	}
     	catch (Exception e) {
             throw new DatabaseErrorException(e);
         }
+    }
+    
+    public void deleteBookmark(Message message) throws DatabaseErrorException {
+		Bookmark bookmark = getEntityManager().find(Bookmark.class, new BookmarkPk(message.getPk().getId(), message.getPk().getConversationId()));
+		deleteBookmark(bookmark);
     }
 }

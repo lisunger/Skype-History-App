@@ -384,6 +384,9 @@ input::placeholder {
   transition: background-color 0.1s ease-in;
   margin-bottom: 0.25em;
 }
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .message.bookmarked {
+  background-color: #fcf6b1;
+}
 .panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper .date {
   font-size: 0.75em;
   color: #8994a9;
@@ -404,6 +407,9 @@ input::placeholder {
 .panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .message {
   background-color: #d8f3fd;
 }
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .message.bookmarked {
+  background-color: #fcf283;
+}
 .panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper:hover .date {
   display: block;
 }
@@ -418,8 +424,14 @@ input::placeholder {
   background-color: #c2efff;
   border-radius: 8px 0 0 8px;
 }
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my .message.bookmarked {
+  background-color: #faee69;
+}
 .panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my:hover .message {
   background-color: #aae1f4;
+}
+.panel-chat .messages-wrapper .ui-datascroller-item .chat-message-wrapper.my:hover .message.bookmarked {
+  background-color: #f0e246;
 }
 
 .panel-bookmarks .panel-bookmarks-panel #dropdownColor #dropdownColor_label {
@@ -546,6 +558,13 @@ input::placeholder {
 }
 #dropdownColor_panel.ui-selectonemenu-panel .ui-selectonemenu-items .ui-selectonemenu-item.ui-selectonemenu-row > td {
   padding: 0;
+}
+
+.panel-stories .panel-stories-panel .stories-header h1 {
+  flex-grow: 1;
+}
+.panel-stories .panel-stories-panel .stories-header .close-icon .ui-button {
+  color: #8994a9;
 }
 
 /* Colors */

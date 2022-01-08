@@ -1,0 +1,27 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
+	<div jsf:id="panel-stories" class="panel-stories">
+		<div jsf:id="panel-stories-panel" class="panel-stories-panel" jsf:rendered="#{reader.currentScreen eq 'STORIES'}">
+			<p:card class="p-shadow-4">
+				
+				<div class="stories-header p-d-flex">
+					<h1>Разкази</h1>
+					<div class="close-icon">
+						<p:commandButton icon="fas fa-times" styleClass="rounded-button ui-button-flat" 
+							actionListener="#{reader.changeScreen('EMPTY')}" partialSubmit="true" process="@this"
+							update="panel-stories"/>
+					</div>
+				</div>
+				
+				<div class="p-grid"></div>
+				
+			</p:card>
+		</div>
+	</div>
+</ui:composition>
