@@ -29,7 +29,7 @@
 			<!-- PF("dataScrollerChat").getJQ().find(".ui-datascroller-content").animate({scrollTop: 1000}, 400) -->
             <div jsf:id="messages-wrapper" class="messages-wrapper">
                 <p:dataScroller id="chat-scroller" value="#{reader.messageLazyModel}" widgetVar="dataScrollerChat" rendered="#{reader.messageLazyModel ne null}"
-                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller" >
+                    var="mess" lazy="true" chunkSize="20" mode="inline" scrollHeight="700" styleClass="messages-scroller" rowIndexVar="index" >
 
                     <p:ajax event="load" oncomplete="clearEmoticonContent()" />
 					
@@ -42,11 +42,11 @@
 	                    <div class="bookmark-icon">
                         	<p:commandButton rendered="#{!mess.bookmarked}" icon="far fa-bookmark" styleClass="rounded-button ui-button-flat"
                         		onclick="console.log('click'); initNewBookmark([{name: 'messageId', value: '#{mess.pk.id}'}]);" 
-                        		oncomplete="console.log('complete'); changeSelectedBookmarkColor(); PF('modalBookmark').show();" />
+                        		oncomplete="console.log('complete'); changeSelectedBookmarkColor(); PF('modalBookmark').show();"
+                        		actionListener="#{reader.setSelectedMessageIndex(index)}" update="modalBookmarkWrapper" />
                         		
                         	<p:commandButton rendered="#{mess.bookmarked}" icon="fas fa-bookmark" styleClass="rounded-button ui-button-flat"
                         		actionListener="#{reader.removeBookmark(mess)}" update="messageLisko" />
-                        		<!-- chat-scroller:0:messageLisko -->
                         </div>
 						<div class="date">
                             <h:outputText value="#{mess.originalArrivalTime}">

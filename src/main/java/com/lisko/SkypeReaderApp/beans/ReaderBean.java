@@ -46,6 +46,7 @@ public class ReaderBean implements Serializable {
     private Screens currentScreen;
 
     private int selectedChatIndex = -1;
+    private int selectedMessageIndex = -1;
     private Conversation selectedChat;
     private Date filterDateBegin;
     private LazyDataModel<Message> messageLazyModel;
@@ -159,7 +160,6 @@ public class ReaderBean implements Serializable {
 
     public void actionLoadMessages() {
         this.messageLazyModel = new MessagesLazyDataModel(this.selectedChat.getId(), this.filterDateBegin);
-        // TODO show scroller
     }
 
     public void deleteDatabase() {
@@ -241,6 +241,7 @@ public class ReaderBean implements Serializable {
 	        }
 	        
 	        this.newBookmark = new Bookmark();
+	        this.selectedMessageIndex = -1;
     	}
     	catch(Exception e) {
     		em.getTransaction().rollback();
@@ -339,7 +340,15 @@ public class ReaderBean implements Serializable {
         this.selectedChatIndex = selectedChatIndex;
     }
 
-    public Conversation getSelectedChat() {
+    public int getSelectedMessageIndex() {
+		return selectedMessageIndex;
+	}
+
+	public void setSelectedMessageIndex(int selectedMessageIndex) {
+		this.selectedMessageIndex = selectedMessageIndex;
+	}
+
+	public Conversation getSelectedChat() {
         return selectedChat;
     }
 

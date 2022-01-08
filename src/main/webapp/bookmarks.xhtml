@@ -188,8 +188,10 @@
 		       			</ui:repeat>
 		       		</div>
 		       		<div class="p-col-12 p-d-flex p-justify-end">
-		       			<p:commandButton value="Cancel" oncomplete="PF('modalBookmark').hide();" styleClass="ui-button-outlined" style="margin-right: 0.5em;"/>
-		       			<p:commandButton value="OK" actionListener="#{reader.actionSaveNewBookmark}" oncomplete="PF('modalBookmark').hide();"/>
+		       			<p:commandButton value="Cancel" oncomplete="PF('modalBookmark').hide();" styleClass="ui-button-outlined" 
+		       				actionListener="#{reader.setSelectedMessageIndex(-1)}" style="margin-right: 0.5em;"/>
+		       			<p:commandButton value="OK" actionListener="#{reader.actionSaveNewBookmark}" oncomplete="PF('modalBookmark').hide();"
+		       				rendered="#{reader.selectedMessageIndex gt -1}" update="chat-scroller:#{reader.selectedMessageIndex}:messageLisko"/>
 		       		</div>
 		       	</div>
 			</p:dialog>
